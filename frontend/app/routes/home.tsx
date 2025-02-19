@@ -1,13 +1,23 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Dashboard from "../components/Dashboard";
+import DashboardHeader from "../components/DashboardHeader";
+
+import styled from 'styled-components';
+
+
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "LifeLine" },
+    { name: "description", content: "Welcome to LifeLine" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+      <>
+          <Dashboard />
+
+      </>
+  )
 }
