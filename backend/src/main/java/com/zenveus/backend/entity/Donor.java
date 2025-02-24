@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "donor")
 public class Donor {
     @Id
-    private Long id;
+    private String id;
 
     @OneToOne
     @MapsId

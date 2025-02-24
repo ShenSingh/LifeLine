@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class BloodRequestDTO {
-    private Long id;
-    private Long requesterId;
+    private String id;
+    private String requesterId;
     private String bloodType;
     private String location;
     private String status;

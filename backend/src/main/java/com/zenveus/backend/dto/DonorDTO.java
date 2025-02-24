@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class DonorDTO {
-    private Long id;
+    private String id;
     private String name;
     private int age;
     private String gender;

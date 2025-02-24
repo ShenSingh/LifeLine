@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AdminDTO {
-    private Long id;
+    private String id;
     private User user;
     private String role;
     private String permissions;

@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class DonationAppointmentDTO {
-    private Long id;
-    private Long donorId;
-    private Long requesterId;
-    private Long hospitalId;
+    private String id;
+    private String donorId;
+    private String requesterId;
+    private String hospitalId;
     private LocalDateTime appointmentDate;
     private String status;
 }

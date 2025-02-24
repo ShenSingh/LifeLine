@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 
 public class NotificationDTO {
-    private Long id;
+    private String id;
     private BloodRequest request;
     private User donor;
     private String message;

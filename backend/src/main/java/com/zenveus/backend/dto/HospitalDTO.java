@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class HospitalDTO {
-    private Long id;
+    private String id;
     private String name;
     private String location;
     private String contactInfo;

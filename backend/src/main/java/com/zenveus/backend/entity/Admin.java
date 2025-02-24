@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "admin")
 public class Admin {
     @Id
-    private Long id;
+    private String id;
 
     @OneToOne
     @MapsId
