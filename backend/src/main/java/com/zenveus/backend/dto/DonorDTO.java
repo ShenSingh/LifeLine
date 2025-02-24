@@ -1,27 +1,17 @@
-package com.zenveus.backend.entity;
+package com.zenveus.backend.dto;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "donor")
-public class Donor {
-    @Id
+public class DonorDTO {
     private Long id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
-
     private String name;
     private int age;
     private String gender;
@@ -32,7 +22,7 @@ public class Donor {
     private String province;
     private int numberOfTimesDonated;
     private LocalDateTime lastDonationDate;
-    private String willingToDonateFrequency; // 4 months, 6 months, 1 year
+    private String willingToDonateFrequency;
     private boolean longTermIllness;
     private String illnessDescription;
     private boolean takingMedicine;

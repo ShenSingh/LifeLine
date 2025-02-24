@@ -1,18 +1,14 @@
-package com.zenveus.backend.entity;
+package com.zenveus.backend.dto;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "hospital")
-public class Hospital {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class HospitalDTO {
     private Long id;
     private String name;
     private String location;
