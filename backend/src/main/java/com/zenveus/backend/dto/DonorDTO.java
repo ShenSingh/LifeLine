@@ -1,5 +1,6 @@
 package com.zenveus.backend.dto;
 
+import com.zenveus.backend.util.BloodType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,9 @@ import java.time.LocalDateTime;
 @Data
 public class DonorDTO {
     private String id;
-    private String name;
     private int age;
     private String gender;
-    private String phone;
-    private String email;
-    private String bloodType;
-    private String city;
-    private String province;
+    private BloodType bloodType;
     private int numberOfTimesDonated;
     private LocalDateTime lastDonationDate;
     private String willingToDonateFrequency;

@@ -1,6 +1,7 @@
 package com.zenveus.backend.entity;
 
 
+import com.zenveus.backend.util.BloodType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,15 +22,9 @@ public class Donor {
     @MapsId
     @JoinColumn(name = "id")
     private User user;
-
-    private String name;
     private int age;
     private String gender;
-    private String phone;
-    private String email;
-    private String bloodType;
-    private String city;
-    private String province;
+    private BloodType bloodType;
     private int numberOfTimesDonated;
     private LocalDateTime lastDonationDate;
     private String willingToDonateFrequency; // 4 months, 6 months, 1 year
