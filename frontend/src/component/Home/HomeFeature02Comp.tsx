@@ -1,62 +1,55 @@
-import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import { CloudArrowUpIcon, LockClosedIcon, ArrowPathIcon, FingerPrintIcon } from '@heroicons/react/24/outline';
 
 const features = [
     {
-        name: 'Push to deploy',
-        description:
-            'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
+        name: 'ඉක්මනින් ලේ අයදුම් කිරීම',
+        description: 'අපැහැදිලි අවස්ථාවල ලේ දායකත්වය ඉක්මනින් අයදුම් කරන්න. පහසු, සාධාරණ, සහ විශ්වාසදායක ක්‍රමවේදයකින් ඔබේ ප්‍රදේශයේ දායකයින් සමඟ සම්බන්ධ වන්න.',
         icon: CloudArrowUpIcon,
     },
     {
-        name: 'SSL certificates',
-        description:
-            'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
+        name: 'සුරක්ෂිත දායක පැතිකඩ',
+        description: 'සියලු දායක තොරතුරු සුරක්ෂිතව ආරක්ෂා කර ඇත. ඔබේ පෞද්ගලිකත්වය අපට අගයයි.',
         icon: LockClosedIcon,
     },
     {
-        name: 'Simple queues',
-        description:
-            'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
+        name: 'සරල දායකත්ව ක්‍රියාවලිය',
+        description: 'ලේ අයදුම් කිරීම සහ පාලනය කිරීම පහසුයි. දායකයින් සහ ප්‍රතිලාභීන් සඳහා පරිශීලක මිතුරන් පද්ධතියක්.',
         icon: ArrowPathIcon,
     },
     {
-        name: 'Advanced security',
-        description:
-            'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
+        name: 'ඉක්මනින් පරීක්ෂා කිරීම',
+        description: 'දායකයින් සහ ප්‍රතිලාභීන්ගේ පැතිකඩ තහවුරු කර ඇත. දෙපාර්ශවය සඳහා විශ්වාසය සහ ආරක්ෂාව තහවුරු කිරීම.',
         icon: FingerPrintIcon,
     },
-]
+];
 
-export default function Example() {
+export default function SinhalaFeatures() {
     return (
-        <div className="bg-white py-24 sm:py-32">
+        <div className="bg-white py-24 sm:py-32 font-sinhala">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl lg:text-center">
-                    <h2 className="text-base/7 font-semibold text-indigo-600">Deploy faster</h2>
-                    <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance">
-                        Everything you need to deploy your app
+                <div className="mx-auto max-w-2xl text-center">
+                    <h2 className="text-lg font-semibold text-red-600">ලේ සොයා ගැනීමට සහ දායකත්වය ලබාදීමට</h2>
+                    <p className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                        ඔබට අවශ්‍ය සියලු දේ
                     </p>
-                    <p className="mt-6 text-lg/8 text-gray-600">
-                        Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
-                        pulvinar et feugiat blandit at. In mi viverra elit nunc.
+                    <p className="mt-6 text-lg text-gray-600">
+                        ඔබේ අවශ්‍යතාවයට පරිපූර්ණ ලේ දායකයා සොයා ගැනීම සහ දායකත්වය ලබාදීම පහසුයි. විශ්වාසවන්ත සහ සරල ක්‍රමවේදයකින් ඔබට සහය දැක්වීමට අපි සූදානම්.
                     </p>
                 </div>
-                <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-                    <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                <div className="mx-auto mt-16 max-w-2xl lg:mt-24 lg:max-w-4xl">
+                    <dl className="grid grid-cols-1 gap-10 lg:grid-cols-2">
                         {features.map((feature) => (
-                            <div key={feature.name} className="relative pl-16">
-                                <dt className="text-base/7 font-semibold text-gray-900">
-                                    <div className="absolute top-0 left-0 flex size-10 items-center justify-center rounded-lg bg-indigo-600">
-                                        <feature.icon aria-hidden="true" className="size-6 text-white" />
-                                    </div>
-                                    {feature.name}
-                                </dt>
-                                <dd className="mt-2 text-base/7 text-gray-600">{feature.description}</dd>
+                            <div key={feature.name} className="relative p-6 bg-gray-100 rounded-lg shadow-lg">
+                                <div className="absolute -top-5 left-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-600">
+                                    <feature.icon aria-hidden="true" className="h-6 w-6 text-white" />
+                                </div>
+                                <dt className="mt-6 text-xl font-bold text-gray-900">{feature.name}</dt>
+                                <dd className="mt-2 text-base text-gray-700">{feature.description}</dd>
                             </div>
                         ))}
                     </dl>
                 </div>
             </div>
         </div>
-    )
+    );
 }
