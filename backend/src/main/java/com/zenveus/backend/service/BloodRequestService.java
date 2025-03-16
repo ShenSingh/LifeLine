@@ -1,4 +1,4 @@
 package com.zenveus.backend.service;
 
-public class BloodReqestService {
+public class BloodRequestService {
 }
