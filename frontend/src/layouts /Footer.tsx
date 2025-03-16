@@ -6,7 +6,7 @@ export const Footer = () => {
             <div className="grid gap-16 row-gap-10 mb-8 lg:grid-cols-6">
                 <div className="md:max-w-md lg:col-span-2">
                     <a
-                        href="/"
+                        href="/frontend/public"
                         aria-label="Go home"
                         title="Company"
                         className="inline-flex items-center"
@@ -48,7 +48,7 @@ export const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     පුවත්
@@ -56,7 +56,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ලෝකය
@@ -64,7 +64,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ක්‍රීඩා
@@ -72,7 +72,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     යොමු
@@ -87,7 +87,7 @@ export const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     වෙබ්
@@ -95,7 +95,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ඊ-වෙළෙඳ
@@ -103,7 +103,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ව්‍යාපාර
@@ -111,7 +111,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     විනෝදය
@@ -119,7 +119,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     පෝර්ට්ෆෝලියෝ
@@ -132,7 +132,7 @@ export const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     මාධ්‍ය
@@ -140,7 +140,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ප්‍රචාරණය
@@ -148,7 +148,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     නොමැති
@@ -156,7 +156,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     අධ්‍යාපනික
@@ -164,7 +164,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     ව්‍යාපෘති
@@ -177,7 +177,7 @@ export const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     පුවත්පත
@@ -185,7 +185,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     පෞද්ගලික
@@ -193,7 +193,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     විකි
@@ -201,7 +201,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/frontend/public"
                                     className="text-white-600 transition-colors duration-300 hover:text-white"
                                 >
                                     සංවාද
@@ -217,7 +217,7 @@ export const Footer = () => {
                 </p>
                 <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                     <a
-                        href="/"
+                        href="/frontend/public"
                         className="text-white-600 transition-colors duration-300 hover:text-white"
                     >
                         <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
