@@ -10,6 +10,8 @@ public class UserController {
     @PostMapping("/register")
     public void registerUser() {
         System.out.println("User registered");
+
+
     }
 
 
