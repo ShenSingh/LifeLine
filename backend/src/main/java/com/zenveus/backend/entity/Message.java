@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @AllArgsConstructor
@@ -13,19 +14,32 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "message")
 public class Message {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    @Id
+    private String id;  // Use String for custom ID format
+
+    private String message;
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    private String message;
-    private LocalDateTime timestamp;
-}
+    @ManyToOne
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
+    @PrePersist
+    public void generateId() {
+        String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy"));
+        String formattedCounter = String.format("MS%04d", getNextCounter()); // Generate MS0001, MS0002, etc.
+        this.id = "LL00" + currentYear + formattedCounter;
+    }
+
+    // Method to generate the next counter (you can modify this logic to fetch from a database or static counter)
+    private int getNextCounter() {
+        // This can be replaced with a more advanced counter generation logic
+        // For example, using a database sequence or other means to ensure uniqueness
+        return (int) (Math.random() * 10000); // Example
+    }
+}

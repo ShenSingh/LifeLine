@@ -5,16 +5,34 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Table(name = "hospital")
 public class Hospital {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-    private String name;
-    private String location;
+    private String id;  // Use String for custom ID format
+
     private String contactInfo;
+    private String location;
+    private String name;
+
+    @PrePersist
+    public void generateId() {
+        String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy"));
+        String formattedCounter = String.format("HP%04d", getNextCounter()); // Generate HP0001, HP0002, etc.
+        this.id = "LL00" + currentYear + formattedCounter;
+    }
+
+    // Method to generate the next counter (you can modify this logic to fetch from a database or static counter)
+    private int getNextCounter() {
+        // This can be replaced with a more advanced counter generation logic
+        // For example, using a database sequence or other means to ensure uniqueness
+        return (int) (Math.random() * 10000); // Example logic, replace with actual counter
+    }
 }

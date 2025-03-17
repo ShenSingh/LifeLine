@@ -1,4 +1,4 @@
 package com.zenveus.backend.service;
 
-public class AdminService {
+public interface AdminService {
 }

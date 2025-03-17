@@ -1,22 +1,17 @@
 package com.zenveus.backend.entity;
 
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "blood_request")
 public class BloodRequest {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private String id;  // Use String for the custom ID format
 
     @ManyToOne
     @JoinColumn(name = "requester_id", nullable = false)
@@ -26,4 +21,13 @@ public class BloodRequest {
     private String location;
     private String status;
     private LocalDateTime createdAt;
+
+    private static int counter = 1;  // Static counter for generating V001, V002, etc.
+
+    @PrePersist
+    public void generateId() {
+        String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy"));
+        String formattedCounter = String.format("BR%04d", counter++);  // Generates V0001, V0002, etc.
+        this.id = "LL00" + currentYear + formattedCounter;  // Generates LL002025BR001 format
+    }
 }

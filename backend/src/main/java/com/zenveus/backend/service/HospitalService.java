@@ -1,4 +1,4 @@
 package com.zenveus.backend.service;
 
-public class HospitalService {
+public interface HospitalService {
 }

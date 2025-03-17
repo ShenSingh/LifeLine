@@ -1,4 +1,4 @@
 package com.zenveus.backend.service;
 
-public class MessageService {
+public interface MessageService {
 }
