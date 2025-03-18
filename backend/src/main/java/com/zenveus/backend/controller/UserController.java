@@ -35,6 +35,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error updating user: " + e.getMessage());
         }
+
     }
 
     @GetMapping
