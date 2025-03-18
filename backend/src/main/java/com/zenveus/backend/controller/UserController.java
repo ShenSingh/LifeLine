@@ -7,13 +7,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/user")
 public class UserController {
 
-    @PostMapping("/register")
-    public void registerUser() {
-        System.out.println("User registered");
-
-
-    }
-
-
-
 }
