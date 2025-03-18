@@ -5,6 +5,7 @@ import com.zenveus.backend.entity.User;
 import com.zenveus.backend.repository.UserRepository;
 import com.zenveus.backend.service.AuthService;
 import com.zenveus.backend.service.UserService;
+import com.zenveus.backend.util.Role;
 import com.zenveus.backend.util.VarList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class AuthServiceImpl implements UserDetailsService, AuthService {
         }catch (UsernameNotFoundException e){
             return null;
         }
+    }
+
+    @Override
+    public User convertToEntity(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+        user.setRole(userDTO.getRole() != null ? userDTO.getRole() : Role.REQUESTER);
+        return user;
     }
 
     @Override

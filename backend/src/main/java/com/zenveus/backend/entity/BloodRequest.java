@@ -1,8 +1,6 @@
 package com.zenveus.backend.entity;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

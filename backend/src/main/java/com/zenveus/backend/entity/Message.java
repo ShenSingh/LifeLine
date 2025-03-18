@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,10 +35,7 @@ public class Message {
         this.id = "LL00" + currentYear + formattedCounter;
     }
 
-    // Method to generate the next counter (you can modify this logic to fetch from a database or static counter)
     private int getNextCounter() {
-        // This can be replaced with a more advanced counter generation logic
-        // For example, using a database sequence or other means to ensure uniqueness
-        return (int) (Math.random() * 10000); // Example
+        return (int) (Math.random() * 10000); // Example logic
     }
 }
