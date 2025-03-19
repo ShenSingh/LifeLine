@@ -23,9 +23,11 @@ public class BloodRequest {
     private User requester;
 
     private String bloodType;
+
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital ;
+    @JoinColumn(name = "hospital_id", nullable = false)
+    private Hospital hospital;
+
     private String status;
     private String createdAt;
 

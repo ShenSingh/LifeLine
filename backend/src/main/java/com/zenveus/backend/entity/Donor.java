@@ -22,7 +22,10 @@ public class Donor {
     private User user;
     private int age;
     private String gender;
+
+    @Enumerated(EnumType.STRING)
     private BloodType bloodType;
+
     private int numberOfTimesDonated;
     private LocalDateTime lastDonationDate;
     private String willingToDonateFrequency; // 4 months, 6 months, 1 year

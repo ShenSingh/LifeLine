@@ -17,16 +17,10 @@ public class Message {
     @Id
     private String id;  // Use String for custom ID format
 
-    private String message;
+    @OneToOne
+    @JoinColumn(name = "blood_request")
+    private BloodRequest bloodRequest;
     private LocalDateTime timestamp;
-
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
-
-    @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
 
     @PrePersist
     public void generateId() {

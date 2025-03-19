@@ -14,18 +14,19 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "notification")
 public class Notification {
 
+
+
     @Id
     private String id;  // Manually assigned ID
 
     @ManyToOne
-    @JoinColumn(name = "request_id", nullable = false)
-    private BloodRequest request;
+    @JoinColumn(name = "donor_id", nullable = false)
+    private Donor donor;
 
     @ManyToOne
-    @JoinColumn(name = "donor_id", nullable = false)
-    private User donor;
+    @JoinColumn(name = "message_id")
+    private Message message;
 
-    private String message;
     private String status;
     private LocalDateTime createdAt;
 
@@ -40,3 +41,9 @@ public class Notification {
         return (int) (Math.random() * 10000); // Example logic, replace with actual counter
     }
 }
+
+// n11, d1, {m1} , pending , 2025-01-01 00:00:00
+// n12, d2, {m1} , asserted , 2025-01-01 00:00:00
+// n13, d3, {m1} , pending , 2025-01-01 00:00:00
+// n14, d4, {m1} , pending , 2025-01-01 00:00:00
+// n15, d5, {m1} , pending , 2025-01-01 00:00:00

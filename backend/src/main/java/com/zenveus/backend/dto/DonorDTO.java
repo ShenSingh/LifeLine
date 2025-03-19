@@ -1,5 +1,6 @@
 package com.zenveus.backend.dto;
 
+import com.zenveus.backend.entity.User;
 import com.zenveus.backend.util.BloodType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,5 @@ public class DonorDTO {
     private String medicineDescription;
     private boolean undergoneSurgery;
     private String surgeryDescription;
+    private User user;
 }
