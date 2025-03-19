@@ -17,9 +17,17 @@ public class Hospital {
     @Id
     private String id;  // Use String for custom ID format
 
-    private String contactInfo;
-    private String location;
     private String name;
+    private String latitude;
+    private String longitude;
+    private String district;
+
+    public Hospital(String name, String lat, String lon) {
+        this.name = name;
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
 
     @PrePersist
     public void generateId() {

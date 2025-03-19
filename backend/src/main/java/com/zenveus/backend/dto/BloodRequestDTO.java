@@ -17,5 +17,5 @@ public class BloodRequestDTO {
     private String bloodType;
     private String location;
     private String status;
-    private LocalDateTime createdAt;
+    private String createdAt;
 }

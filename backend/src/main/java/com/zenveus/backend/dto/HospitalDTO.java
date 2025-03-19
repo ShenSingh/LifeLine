@@ -12,5 +12,5 @@ public class HospitalDTO {
     private String id;
     private String name;
     private String location;
-    private String contactInfo;
+    private String district;
 }

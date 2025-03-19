@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
-@RequestMapping("api/bloodRequest")
+@RequestMapping("api/v1/bloodRequest")
 public class BloodRequestController {
 
     @Autowired

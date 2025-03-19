@@ -1,10 +1,17 @@
 package com.zenveus.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Table(name = "blood_request")
 public class BloodRequest {
 
@@ -16,9 +23,11 @@ public class BloodRequest {
     private User requester;
 
     private String bloodType;
-    private String location;
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital ;
     private String status;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     private static int counter = 1;  // Static counter for generating V001, V002, etc.
 

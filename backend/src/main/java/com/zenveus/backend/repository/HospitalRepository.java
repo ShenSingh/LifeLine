@@ -1,9 +1,11 @@
 package com.zenveus.backend.repository;
 
-import com.zenveus.backend.entity.DonationAppointment;
+import com.zenveus.backend.entity.Hospital;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface HospitalRepository extends JpaRepository<DonationAppointment, String> {
+@Repository
+public interface HospitalRepository extends JpaRepository<Hospital, String> {
 }
 
 

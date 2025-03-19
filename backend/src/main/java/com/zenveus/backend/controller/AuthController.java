@@ -66,15 +66,8 @@ public class AuthController {
 
             int isOk = authService.registerUser(userDTO);
 
+            System.out.println("user reg code ++++++"+isOk);
             if (isOk == 201) {
-                if (userDTO.getRole() == Role.ADMIN) {
-                    User user = authService.convertToEntity(userDTO);
-                    Admin admin = new Admin();
-                    admin.setUser(user);
-                    admin.setRole("ADMIN");
-                    admin.setPermissions("ALL");
-                    adminService.createAdmin(admin);
-                }
 
                 AuthDTO authDTO = new AuthDTO();
                 authDTO.setEmail(userDTO.getEmail());

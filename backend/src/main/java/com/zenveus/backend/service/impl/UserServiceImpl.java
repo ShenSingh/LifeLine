@@ -1,6 +1,5 @@
 package com.zenveus.backend.service.impl;
 
-import com.zenveus.backend.entity.User;
 import com.zenveus.backend.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

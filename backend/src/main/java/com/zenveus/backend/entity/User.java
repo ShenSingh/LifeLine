@@ -24,7 +24,7 @@ public class User {
     private String email;
     private String phone;
     private String address;
-    private String city;
+    private String district;
     private String username;
     private String password;
 
@@ -36,6 +36,8 @@ public class User {
 
     @OneToMany(mappedBy = "donor")
     private List<DonationAppointment> donationAppointments;
+
+    private String status;
 
     @PrePersist
     public void generateId() {
