@@ -1,17 +1,20 @@
 package com.zenveus.backend.service.impl;
 
+import com.zenveus.backend.dto.HospitalDTO;
 import com.zenveus.backend.entity.Hospital;
 import com.zenveus.backend.repository.HospitalRepository;
 import com.zenveus.backend.service.HospitalService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
@@ -19,11 +22,13 @@ public class HospitalServiceImpl implements HospitalService {
 
     private final HospitalRepository hospitalRepository;
     private final RestTemplate restTemplate;
+    private final ModelMapper modelMapper;
 
 
     @Autowired
-    public HospitalServiceImpl(HospitalRepository hospitalRepository) {
+    public HospitalServiceImpl(HospitalRepository hospitalRepository, ModelMapper modelMapper) {
         this.hospitalRepository = hospitalRepository;
+        this.modelMapper = modelMapper;
         this.restTemplate = new RestTemplate();
     }
 
@@ -65,6 +70,13 @@ public class HospitalServiceImpl implements HospitalService {
 
         }
 
+    }
+
+    @Override
+    public List<HospitalDTO> getHospitals() {
+        return hospitalRepository.findAll().stream()
+                .map(hospital -> modelMapper.map(hospital, HospitalDTO.class))
+                .collect(Collectors.toList());
     }
 }
 

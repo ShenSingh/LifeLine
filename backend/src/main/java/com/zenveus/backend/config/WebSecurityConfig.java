@@ -1,14 +1,11 @@
 package com.zenveus.backend.config;
 
-
-import com.zenveus.backend.service.impl.UserServiceImpl;
+import com.zenveus.backend.config.JwtFilter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -21,13 +18,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @EnableWebSecurity
@@ -38,9 +40,10 @@ public class WebSecurityConfig {
     private static final int CORS_FILTER_ORDER = -102;
 
     @Autowired
-    private UserServiceImpl userService;
+    private com.zenveus.backend.service.impl.UserServiceImpl userService;
     @Autowired
     private JwtFilter jwtFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -60,18 +63,22 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "api/v1/donationAppointments/**",
+                                "api/v1/admin/**",
+                                "api/v1/message/**",
+                                "api/v1/hospital/**",
                                 "api/v1/notification/**",
                                 "api/v1/donor/**",
-                                "/api/hospital/fetch",
-                                "/api/v1/bloodRequest/**",
+                                "api/v1/bloodRequest/**",
+                                "api/v1/user/**",
+                                "api/v1/auth/**",
                                 "/api/v1/auth/authenticate",
-                                "/api/v1/auth/register",
-                                "/api/v1/auth/login",
+                                "/api/v1/user/register",
+                                "/api/v1/user/login",
                                 "/api/v1/auth/refreshToken",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html"
-                        ).permitAll()
+                                "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -118,11 +125,6 @@ public class WebSecurityConfig {
         // should be set order to -100 because we need to CorsFilter before SpringSecurityFilter
         bean.setOrder(CORS_FILTER_ORDER);
         return bean;
-    }
-
-    @Bean
-    public ModelMapper getModelMapper() {
-        return new ModelMapper();
     }
 }
 

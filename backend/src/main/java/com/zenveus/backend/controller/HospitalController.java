@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
-@RequestMapping("api/hospital")
+@RequestMapping("api/v1/hospital")
 public class HospitalController {
 
 
@@ -23,5 +23,10 @@ public class HospitalController {
     public String fetchHospitals() {
         hospitalService.fetchAndSaveHospitals();
         return "Hospital data fetched and stored successfully!";
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getHospitals() {
+        return ResponseEntity.ok(hospitalService.getHospitals());
     }
 }

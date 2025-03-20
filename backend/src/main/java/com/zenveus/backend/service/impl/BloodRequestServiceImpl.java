@@ -77,9 +77,10 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
                         NotificationDTO notificationDTO =new NotificationDTO();
                         notificationDTO.setDonor(donor);
-                        notificationDTO.setRequest(bloodRequest);
+                        notificationDTO.setMessage(message);
                         notificationDTO.setStatus("pending");
                         notificationDTO.setCreatedAt(timestamp);
+
 
                         // save notification
                         Notification notification = notificationRepository.save(modelMapper.map(notificationDTO, Notification.class));
