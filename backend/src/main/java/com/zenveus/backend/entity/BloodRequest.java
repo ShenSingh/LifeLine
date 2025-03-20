@@ -31,12 +31,14 @@ public class BloodRequest {
     private String status;
     private String createdAt;
 
-    private static int counter = 1;  // Static counter for generating V001, V002, etc.
-
     @PrePersist
     public void generateId() {
         String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy"));
-        String formattedCounter = String.format("BR%04d", counter++);  // Generates V0001, V0002, etc.
-        this.id = "LL00" + currentYear + formattedCounter;  // Generates LL002025BR001 format
+        String formattedCounter = String.format("BR%04d", getNextCounter()); // Generate, etc.
+        this.id = "LL00" + currentYear + formattedCounter;
+    }
+
+    private int getNextCounter() {
+        return (int) (Math.random() * 10000); // Example logic, replace with actual counter
     }
 }

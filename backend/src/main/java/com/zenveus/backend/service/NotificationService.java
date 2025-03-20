@@ -7,4 +7,6 @@ public interface NotificationService {
     NotificationDTO getNotificationById(String id);
     void deleteNotification(String id);
     NotificationDTO updateNotification(NotificationDTO notificationDTO);
+
+    void processEmailNotification(String notificationId);
 }

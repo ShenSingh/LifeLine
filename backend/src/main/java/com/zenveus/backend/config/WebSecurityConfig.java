@@ -60,6 +60,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "api/v1/notification/**",
                                 "api/v1/donor/**",
                                 "/api/hospital/fetch",
                                 "/api/v1/bloodRequest/**",

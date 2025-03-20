@@ -3,6 +3,8 @@ package com.zenveus.backend.controller;
 import com.zenveus.backend.dto.NotificationDTO;
 import com.zenveus.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,5 +33,17 @@ public class NotificationController {
     @PutMapping
     public NotificationDTO updateNotification(@RequestBody NotificationDTO notificationDTO) {
         return notificationService.updateNotification(notificationDTO);
+    }
+
+
+
+    @GetMapping("/email")
+    public ResponseEntity<String> handleEmailNotification(@RequestParam String notificationId) {
+        try {
+            notificationService.processEmailNotification(notificationId);
+            return ResponseEntity.ok("Notification processed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Notification not found");
+        }
     }
 }

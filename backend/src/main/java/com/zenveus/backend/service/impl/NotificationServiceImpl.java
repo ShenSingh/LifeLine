@@ -41,4 +41,18 @@ public class NotificationServiceImpl implements NotificationService {
         notification = notificationRepository.save(notification);
         return modelMapper.map(notification, NotificationDTO.class);
     }
+
+    @Override
+    public void processEmailNotification(String notificationId) {
+        // Find the notification by requestId
+        Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new RuntimeException("Notification not found"));
+
+        // Update the notification status
+        notification.setStatus("confirmed");
+        notificationRepository.save(notification);
+        System.out.println("Notification processed successfully");
+
+    }
+
+
 }

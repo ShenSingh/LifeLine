@@ -1,16 +1,15 @@
 package com.zenveus.backend.service.impl;
 
-import com.sun.mail.smtp.SMTPMessage;
 import com.zenveus.backend.dto.BloodRequestDTO;
 import com.zenveus.backend.dto.MessageDTO;
 import com.zenveus.backend.dto.NotificationDTO;
 import com.zenveus.backend.entity.*;
 import com.zenveus.backend.repository.*;
 import com.zenveus.backend.service.BloodRequestService;
-import com.zenveus.backend.util.SMTPMailSender;
+import com.zenveus.backend.util.BloodType;
+import com.zenveus.backend.util.Mail;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -46,7 +45,6 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         try {
 
             BloodRequest bloodRequest = bloodRequestRepository.save(modelMapper.map(bloodRequestDTO, BloodRequest.class));
-
             LocalDateTime timestamp = LocalDateTime.now();
 
             if (bloodRequest != null) {
@@ -58,21 +56,24 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
                 if (message != null) {
                     // filter doner
+                    List<Donor> donors = new ArrayList<>();
 
-                    List<Donor> doners = new ArrayList<>();
+                    BloodType reqBloodType = BloodType.valueOf(bloodRequest.getBloodType());
 
                     for(Donor donor : donorRepository.findAll()) {
-                        if(donor.getBloodType().equals(bloodRequest.getBloodType())) {
-                            doners.add(donor);
+
+                        BloodType bloodType = donor.getBloodType();
+
+                        if(donor.getBloodType().equals(reqBloodType)) {
+                            System.out.println(bloodRequest.getBloodType());
+                            donors.add(donor);
                         }
                     }
 
-                    for(Donor donor : doners) {
+                    System.out.println("donors"+donors);
 
+                    for(Donor donor : donors) {
                         User user = userRepository.findById(donor.getId()).orElseThrow(() -> new RuntimeException("User not found"));
-
-
-                        SMTPMailSender.sendEmail(user.getEmail(), "Blood Request", "Blood request for " + bloodRequest.getBloodType() + " at " + bloodRequest.getHospital().getName());
 
                         NotificationDTO notificationDTO =new NotificationDTO();
                         notificationDTO.setDonor(donor);
@@ -85,9 +86,18 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
                         if (notification != null) {
                             System.out.println("Notification sent to donor");
-                            return modelMapper.map(bloodRequest, BloodRequestDTO.class);
+
+                            System.out.println(notification.getId()+"  not id eka");
+
+                            // send mail
+                            boolean sendOk =sendMail(user.getFirstName(),user.getEmail(), bloodRequest, notification.getId());
+
+                        }else {
+                            return null;
                         }
                     }
+
+                    return modelMapper.map(bloodRequest, BloodRequestDTO.class);
                     // get donor mail sent
                 }
 
@@ -102,6 +112,31 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         }
 
 
+    }
+
+    private boolean sendMail(String firstName, String email, BloodRequest bloodRequest, String notificationId) {
+        try {
+            Mail mail = new Mail();
+
+            String emailContent = "<html>" +
+                    "<body>" +
+                    "<h7>Id:"+notificationId+"</h7>"+
+                    "<h1>Blood Request</h1>" +
+                    "<p>Dear " + firstName + ",</p>" +
+                    "<p>We have a blood request for " + bloodRequest.getBloodType() + " from " + bloodRequest.getHospital().getName() + ".</p>" +
+                    "<p>Please click the button below if you are able to donate:</p>" +
+                    "<a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">Done</a>" +
+                    "</body>" +
+                    "</html>";
+
+            mail.setTo(email);
+            mail.setSubject("Blood Request");
+            mail.setMsg(emailContent);
+            mail.run();
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
