@@ -4,6 +4,7 @@ import com.zenveus.backend.dto.BloodRequestDTO;
 import com.zenveus.backend.service.BloodRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class BloodRequestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBloodRequest(@PathVariable String id) {
         try {
             bloodRequestService.deleteBloodRequest(id);

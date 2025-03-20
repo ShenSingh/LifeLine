@@ -4,6 +4,7 @@ import com.zenveus.backend.dto.DonationAppointmentDTO;
 import com.zenveus.backend.service.DonationAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,12 +36,14 @@ public class DonationAppointmentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DonationAppointmentDTO> updateAppointment(@PathVariable String id, @RequestBody DonationAppointmentDTO appointmentDTO) {
         DonationAppointmentDTO updatedAppointment = donationAppointmentService.updateAppointment(id, appointmentDTO);
         return ResponseEntity.ok(updatedAppointment);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteAppointment(@PathVariable String id) {
         donationAppointmentService.deleteAppointment(id);
         return ResponseEntity.noContent().build();
