@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8080/api/user"; // Replace with your backend URL
+const API_BASE_URL = "http://localhost:8181/api/v1/auth";
 
 export const signup = async (userData) => {
     return new Promise((resolve, reject) => {
