@@ -32,6 +32,7 @@ public class FirebaseAuthController {
         }
     }
 
+
     @GetMapping("/test")
     public ResponseEntity<String> testFirebaseAuth(@RequestHeader("Authorization") String idToken) {
         try {
