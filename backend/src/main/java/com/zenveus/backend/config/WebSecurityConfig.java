@@ -1,8 +1,5 @@
 package com.zenveus.backend.config;
 
-import com.zenveus.backend.security.FirebaseAuthFilter;
-import com.zenveus.backend.service.FirebaseAuthService;
-import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +32,6 @@ import java.util.Arrays;
 public class WebSecurityConfig {
     private static final Long MAX_AGE = 3600L;
     private static final int CORS_FILTER_ORDER = -102;
-
-    @Autowired
-    private FirebaseAuthService firebaseAuthService;
 
     @Autowired
     private com.zenveus.backend.service.impl.UserServiceImpl userService;
@@ -86,7 +80,6 @@ public class WebSecurityConfig {
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new FirebaseAuthFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
