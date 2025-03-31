@@ -45,6 +45,7 @@ public class AuthController {
                 responseDTO.setMessage("Login successful");
                 responseDTO.setData(authDTO);
                 return ResponseEntity.ok(responseDTO);
+
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseDTO(VarList.Unauthorized, "Invalid credentials", null));
