@@ -7,6 +7,7 @@ import HomeFeature04Comp from '../../components/user/home/HomeFeature04Comp';
 import QuickSteps from '../../components/user/QuickSteps';
 import HomeRegComp from '../../components/user/home/HomeRegComp';
 import { Footer } from '../../layout/user/Footer';
+import PageMeta from "../../components/common/PageMeta.tsx";
 
 export default function Home() {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
@@ -30,6 +31,11 @@ export default function Home() {
 
     return (
         <>
+            <PageMeta
+                title="LifeLine | Home"
+                description="This is home page"
+            />
+
             <Navbar isVisible={isNavbarVisible} />
             <Hero />
             <HomeFeature02Comp />

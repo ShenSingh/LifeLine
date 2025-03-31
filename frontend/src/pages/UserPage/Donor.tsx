@@ -6,6 +6,7 @@ import {Footer} from '../../layout/user/Footer.tsx';
 import DonorRegForm from "../../components/user/donor/DonorRegForm";
 import DonorDetails01Comp from "../../components/user/donor/DonorDetails01Comp";
 import DonorDetails02Comp from "../../components/user/donor/DonorDetails02Comp";
+import PageMeta from "../../components/common/PageMeta.tsx";
 
 
 export const Donor = () => {
@@ -17,6 +18,11 @@ export const Donor = () => {
 
     return (
         <>
+            <PageMeta
+                title="LifeLine | Donor"
+                description="This is donor page"
+            />
+
             <MainNavbar/>
             <Headertitle title={title} img={img} description={description}  />
             <DonorRegForm/>

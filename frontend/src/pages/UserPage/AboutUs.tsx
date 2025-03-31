@@ -7,6 +7,7 @@ import AboutDisInApp from "../../components/user/aboutUs/AboutDisInApp";
 import HomeRegComp from '../../components/user/home/HomeRegComp';
 import JoinUs from "../../components/user/aboutUs/JoinUs";
 import {Footer} from '../../layout/user/Footer.tsx';
+import PageMeta from "../../components/common/PageMeta.tsx";
 
 export const AboutUs = () => {
 
@@ -17,6 +18,11 @@ export const AboutUs = () => {
 
     return (
         <>
+            <PageMeta
+                title="LifeLine | About Us"
+                description="This is about us page"
+            />
+
             <MainNavbar/>
             <HeaderTitle title={title} img={img} description={description}  />
             <AboutInApp/>

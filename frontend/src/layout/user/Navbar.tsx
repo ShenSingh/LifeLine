@@ -111,7 +111,7 @@ export default function Navbar({}: NavbarProps) {
                             >
                                 <MenuItem>
                                     <a
-                                        href="/serProfiles"
+                                        href="/userProfile"
                                         className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                                     >
                                         Your Profile
@@ -119,7 +119,7 @@ export default function Navbar({}: NavbarProps) {
                                 </MenuItem>
                                 <MenuItem>
                                     <a
-                                        href="#"
+                                        href="/profile"
                                         className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                                     >
                                         Settings

@@ -98,28 +98,22 @@ export default function DonorFindForm() {
                                                                     />
                                                             </div>
                                                             <div>
-                                                                    <label htmlFor="province" className="block text-sm font-medium text-red-500">
-                                                                            Province
+                                                                    <label htmlFor="hospital" className="block text-sm font-medium text-red-500">
+                                                                            Hospital
                                                                     </label>
                                                                     <select
-                                                                        id="province"
-                                                                        name="province"
+                                                                        id="hospital"
+                                                                        name="hospital"
                                                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                                                     >
-                                                                            <option value="">Select your province</option>
+                                                                            <option value="">Select your hospital</option>
                                                                             {[
-                                                                                    "Central",
-                                                                                    "Eastern",
-                                                                                    "Northern",
-                                                                                    "Southern",
-                                                                                    "Western",
-                                                                                    "North Western",
-                                                                                    "North Central",
-                                                                                    "Uva",
-                                                                                    "Sabaragamuwa",
-                                                                            ].map((province) => (
-                                                                                <option key={province} value={province}>
-                                                                                        {province}
+                                                                                    "hos1",
+                                                                                    "ho2",
+                                                                                    "ho3",
+                                                                            ].map((hospital) => (
+                                                                                <option key={hospital} value={hospital}>
+                                                                                        {hospital}
                                                                                 </option>
                                                                             ))}
                                                                     </select>

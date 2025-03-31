@@ -7,6 +7,7 @@ import DonorFindForm from "../../components/user/findDonor/DonorFindForm";
 
 import QuickSteps from '../../components/user/QuickSteps'
 import {Footer} from '../../layout/user/Footer';
+import PageMeta from "../../components/common/PageMeta.tsx";
 
 
 export const FindDonor = () => {
@@ -18,6 +19,11 @@ export const FindDonor = () => {
 
     return (
         <>
+            <PageMeta
+                title="LifeLine | Find Donor"
+                description="This is find donor page"
+            />
+
             <MainNavbar/>
             <Headertitle title={title} img={img} description={description}  />
             <DonorFindForm/>
