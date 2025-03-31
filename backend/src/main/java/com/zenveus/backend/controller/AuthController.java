@@ -36,7 +36,8 @@ public class AuthController {
         try {
             UserDTO userDTO = authService.loginUser(user.getEmail(), user.getPassword());
             if (userDTO != null) {
-                String token = JwtUtil.generateToken(userDTO);
+
+                String token = new JwtUtil().generateToken(userDTO);
                 AuthDTO authDTO = new AuthDTO();
                 authDTO.setEmail(userDTO.getEmail());
                 authDTO.setToken(token);
@@ -72,7 +73,7 @@ public class AuthController {
 
                 AuthDTO authDTO = new AuthDTO();
                 authDTO.setEmail(userDTO.getEmail());
-                authDTO.setToken(JwtUtil.generateToken(userDTO));
+                authDTO.setToken(jwtUtil.generateToken(userDTO));
 
                 ResponseDTO responseDTO = new ResponseDTO();
                 responseDTO.setCode(VarList.Created);

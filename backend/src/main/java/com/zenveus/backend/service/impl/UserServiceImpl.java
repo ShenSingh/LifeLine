@@ -4,13 +4,18 @@ import com.zenveus.backend.dto.UserDTO;
 import com.zenveus.backend.entity.User;
 import com.zenveus.backend.repository.UserRepository;
 import com.zenveus.backend.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +25,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {

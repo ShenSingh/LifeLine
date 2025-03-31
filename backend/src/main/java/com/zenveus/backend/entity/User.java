@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -38,15 +37,4 @@ public class User {
     private List<DonationAppointment> donationAppointments;
 
     private String status;
-
-    @PrePersist
-    public void generateId() {
-        String currentYear = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy"));
-        String formattedCounter = String.format("UR%04d", getNextCounter()); // Generate UR0001, UR0002, etc.
-        this.id = "LL00" + currentYear + formattedCounter;
-    }
-
-    private int getNextCounter() {
-        return (int) (Math.random() * 10000); // Example logic, replace with actual counter
-    }
 }

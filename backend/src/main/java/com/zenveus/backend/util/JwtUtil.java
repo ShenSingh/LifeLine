@@ -5,107 +5,81 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Component
-@PropertySource(ignoreResourceNotFound = true, value = "classpath:otherprops.properties")
+@PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
 public class JwtUtil implements Serializable {
 
     private static final long serialVersionUID = 234234523523L;
-
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 12;
 
-    private static String secretKey;
+    @Value("${jwt.secret}")
+    private String secretKey;
 
-    private static String generateSecretKey(String email) {
-        byte[] key = new byte[64];
-        new SecureRandom().nextBytes(key);
-        secretKey=Base64.getEncoder().encodeToString((email + Base64.getEncoder().encodeToString(key)).getBytes());
-
-        return  secretKey;
-    }
-
-    //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
+        System.out.println("===================getUserNameFromToken===============================================");
+        System.out.println("Validating with Secret Key: " + secretKey); // Log the secret key
+        System.out.println("Token: " + token); // Log the token
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    //retrieve expiration date from jwt token
+    public Claims getUserRoleCodeFromToken(String token) {
+        System.out.println("===============================================================================");
+        System.out.println("Validating with Secret Key: " + secretKey); // Log the secret key
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    }
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
+        System.out.println("====================getClaimFromToken==============================================");
+        System.out.println("Claims: " + claims); // Log the claims
         return claimsResolver.apply(claims);
     }
 
-    //for retrieving any information from token we will need the secret key
-    private Claims getAllClaimsFromToken(String token) {
-        String email = getUsernameFromToken(token);
-        String secretKey = generateSecretKey(email);
+    public Claims getAllClaimsFromToken(String token) {
+        System.out.println("Validating with Secret Key: " + secretKey); // Log the secret key
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    //check if the token has expired
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
+        System.out.println("Token Expiration: " + expiration); // Logging
         return expiration.before(new Date());
     }
 
-    //generate token for user
-    public static String generateToken(@Valid UserDTO userDTO) {
+    public String generateToken(@Valid UserDTO userDTO) {
+        System.out.println("Generating Token for: " + userDTO.getEmail()); // Log the user email
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userDTO.getRole());
-        String secretKey = generateSecretKey(userDTO.getEmail());
-        System.out.println("Secret Key: " + secretKey);
-        String t = doGenerateToken(claims, userDTO.getEmail(), secretKey);
-        if (t == null || t.isEmpty()) {
-            System.out.println("Token generation failed.");
-        } else {
-            System.out.println("Token: " + t);
-        }
-        return t;
+        claims.put("role", "ROLE_" + userDTO.getRole()); // Ensure ROLE_ prefix is added
+        System.out.println("Using Secret Key: " + secretKey); // Log the secret key
+        return doGenerateToken(claims, userDTO.getEmail());
     }
 
-    private static String doGenerateToken(Map<String, Object> claims, String subject, String secretKey) {
-        try {
-            System.out.println("Generating token with subject: " + subject + " and secretKey: " + secretKey);
-            String token = Jwts.builder()
-                    .setClaims(claims)
-                    .setSubject(subject)
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                    .signWith(SignatureAlgorithm.HS512, secretKey).compact();
-            System.out.println("Generated token: " + token);
-            return token;
-        } catch (Exception e) {
-            System.out.println("Error generating token: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }
 
-    //validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
-
-
-    public Claims getUserRoleCodeFromToken(String token) {
-        String email = getUsernameFromToken(token);
-
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 }
