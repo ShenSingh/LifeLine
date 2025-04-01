@@ -25,8 +25,9 @@ public class HospitalController {
         return "Hospital data fetched and stored successfully!";
     }
 
-    @GetMapping
+    @GetMapping("/getAllHospitals")
     public ResponseEntity<?> getHospitals() {
+        System.out.println("Getting hospitals");
         return ResponseEntity.ok(hospitalService.getHospitals());
     }
 }

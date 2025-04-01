@@ -1,5 +1,6 @@
 package com.zenveus.backend.dto;
 
+import com.zenveus.backend.entity.Hospital;
 import com.zenveus.backend.util.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,9 +15,9 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private  String password;
     private String phone;
     private String address;
-    private String district;
-    private String password;
+    private Hospital hospital;
     private Role role; // REQUESTER or DONOR
 }

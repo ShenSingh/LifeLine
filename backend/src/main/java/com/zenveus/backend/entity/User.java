@@ -23,9 +23,12 @@ public class User {
     private String email;
     private String phone;
     private String address;
-    private String district;
     private String username;
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital ;
 
     @Enumerated(EnumType.STRING)
     private Role role; // REQUESTER or DONOR

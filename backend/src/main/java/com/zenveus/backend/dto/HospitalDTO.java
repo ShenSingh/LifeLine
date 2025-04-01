@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class HospitalDTO {
+public class    HospitalDTO {
     private String id;
     private String name;
-    private String location;
+    private String latitude;
+    private String longitude;
     private String district;
 }

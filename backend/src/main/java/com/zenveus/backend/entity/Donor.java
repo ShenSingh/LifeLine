@@ -36,7 +36,4 @@ public class Donor {
     private String medicineDescription;
     private boolean undergoneSurgery;
     private String surgeryDescription;
-    @ManyToOne
-    @JoinColumn(name = "nearest_hospital_id")
-    private Hospital nearestHospital;
 }

@@ -27,6 +27,5 @@ public class DonorDTO {
     private String medicineDescription;
     private boolean undergoneSurgery;
     private String surgeryDescription;
-    private Hospital hospital;
     private User user;
 }
