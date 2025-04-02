@@ -20,4 +20,6 @@ public class UserDTO {
     private String address;
     private Hospital hospital;
     private Role role; // REQUESTER or DONOR
+    private String status;
+
 }
