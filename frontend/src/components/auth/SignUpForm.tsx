@@ -7,6 +7,7 @@ import Checkbox from "../form/input/Checkbox";
 import getHospitalList, { Hospital } from "../../api/hospital.tsx";
 import { register } from "../../api/auth.tsx";
 import Alert from "../uiComponent/alert/Alert.tsx";
+import {setToken} from "../../service/AuthService.tsx";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,9 +42,22 @@ export default function SignUpForm() {
     fetchHospitals();
   }, []);
 
+  // Modify the handleSignUp function to pass the full hospital object
   const handleSignUp = async () => {
-    const result = await register(fName, lName, hospital, email, password);
+    const selectedHospital = hospitals.find(h => h.value === hospital);
+    if (!selectedHospital) {
+      setAlert({ variant: "error", title: "Error", message: "Please select a valid hospital" });
+      setAlertVisible(true);
+      setTimeout(() => {
+        setAlertVisible(false);
+      }, 3000);
+      return;
+    }
+
+    const result = await register(fName, lName, selectedHospital.original, email, password);
+
     if (result) {
+      setToken(result.token);
       setAlert({ variant: "success", title: "Success", message: "Registration successful" });
     } else {
       setAlert({ variant: "error", title: "Error", message: "Registration failed" });
@@ -53,7 +67,6 @@ export default function SignUpForm() {
       setAlertVisible(false);
     }, 3000);
   };
-
   return (
       <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2 no-scrollbar">
         <div>

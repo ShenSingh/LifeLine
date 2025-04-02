@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {checkRole} from "../service/AuthService.tsx";
+import {Hospital} from "./hospital.tsx";
 
 const API_URL = 'http://localhost:8181/api/v1/auth/';
 
@@ -10,7 +11,7 @@ interface RegisterResponse {
     email: string;
     // Add other fields as needed
 }
-export async function register(fName: string, lName: string, hospital: string, email: string, password: string): Promise<RegisterResponse | null> {
+export async function register(fName: string, lName: string, hospital:Hospital, email: string, password: string): Promise<RegisterResponse | null> {
     try {
 
         const role:string = checkRole(email);
@@ -23,11 +24,11 @@ export async function register(fName: string, lName: string, hospital: string, e
             password: password,
             phone: "",
             address: "",
-            hospital:{
-
-            },
-            role: role
+            hospital:hospital,
+            role: role,
+            status: "ACTIVE"
         });
+
         return response.data;
     } catch (error) {
         console.error(error);
