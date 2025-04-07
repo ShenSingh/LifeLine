@@ -39,6 +39,7 @@ export async function register(fName: string, lName: string, hospital:Hospital, 
 interface LoginResponse {
     accessToken: string;
     // Add other fields as needed
+
 }
 
 export async function login(email: string, password: string): Promise<LoginResponse | null> {
