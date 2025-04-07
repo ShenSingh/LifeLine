@@ -47,6 +47,7 @@ export async function login(email: string, password: string): Promise<LoginRespo
         const response = await axios.post<LoginResponse>(API_URL + 'login', {
             email,
             password,
+
         });
         if (response.data.accessToken) {
             localStorage.setItem('user', JSON.stringify(response.data));
