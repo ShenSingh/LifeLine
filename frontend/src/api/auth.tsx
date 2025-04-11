@@ -2,7 +2,7 @@ import axios from 'axios';
 import {checkRole} from "../service/AuthService.tsx";
 import {Hospital} from "./hospital.tsx";
 
-const API_URL = 'http://localhost:8181/api/v1/auth/';
+const API_URL = 'http://localhost:8181/a pi/v1/auth/';
 
 interface RegisterResponse {
     // Define the expected structure of the response data

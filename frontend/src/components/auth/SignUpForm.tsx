@@ -57,7 +57,8 @@ export default function SignUpForm() {
     const result = await register(fName, lName, selectedHospital.original, email, password);
 
     if (result) {
-      setToken(result.token);
+      console.log("result ok >> "+ result)
+      // setToken(result.token);
       setAlert({ variant: "success", title: "Success", message: "Registration successful" });
     } else {
       setAlert({ variant: "error", title: "Error", message: "Registration failed" });
