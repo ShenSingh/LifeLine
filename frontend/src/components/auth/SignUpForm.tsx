@@ -7,7 +7,6 @@ import Checkbox from "../form/input/Checkbox";
 import getHospitalList, { Hospital } from "../../api/hospital.tsx";
 import { register } from "../../api/auth.tsx";
 import Alert from "../uiComponent/alert/Alert.tsx";
-import {setToken} from "../../service/AuthService.tsx";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);

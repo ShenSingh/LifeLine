@@ -24,18 +24,24 @@ const navItems: NavItem[] = [
     {
         icon: <GridIcon />,
         name: "Dashboard",
-        path: "/",
+        path: "#",
+    },
+    {
+        icon: <ListIcon />,
+        name: "Blood Request",
+        path: "/bloodRequest",
+    },
+    {
+        icon: <ListIcon />,
+        name: "Blood Donation",
+        path: "/bloodDonation",
     },
     {
         icon: <CalenderIcon />,
         name: "Calendar",
         path: "/calendar",
     },
-    {
-        name: "Games",
-        icon: <ListIcon />,
-        path: "/form-elements",
-    },
+
     {
         icon: <UserCircleIcon />,
         name: "Setting",

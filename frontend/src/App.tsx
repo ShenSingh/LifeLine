@@ -19,6 +19,10 @@ import {Donor} from "./pages/UserPage/Donor.tsx";
 import {FindDonor} from "./pages/UserPage/FindDonor.tsx";
 import UserProfile from "./pages/UserPage/UserProfile.tsx";
 import Test01 from "./test/Test01.tsx";
+import Calendar from "./pages/Calendar.tsx";
+import BloodRequest from "./pages/UserPage/userDashboard/BloodRequest.tsx";
+import BloodDonation from "./pages/UserPage/userDashboard/BloodDonation.tsx";
+import RequestDetails from "./components/user/dashboard/RequestDetails.tsx";
 
 export default function App() {
   return (
@@ -61,9 +65,23 @@ export default function App() {
             <Route path="/test01" element={<Test01 />} />
 
 
+            {/* UserPage Layout */}
+          <Route path="/calendar" element={<Calendar />} />
+
           <Route element={<AppLayout role={"user"}/>}>
             <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/bloodRequest" element={<BloodRequest />} />
+            <Route path="/bloodDonation" element={<BloodDonation />} />
+            <Route path="/requestDetails" element={<RequestDetails />} />
           </Route>
+
+
+
+
+
+
+
+
 
 
 
