@@ -22,7 +22,7 @@ import Test01 from "./test/Test01.tsx";
 import Calendar from "./pages/Calendar.tsx";
 import BloodRequest from "./pages/UserPage/userDashboard/BloodRequest.tsx";
 import BloodDonation from "./pages/UserPage/userDashboard/BloodDonation.tsx";
-import RequestDetails from "./components/user/dashboard/RequestDetails.tsx";
+import RequestDetails from "./pages/UserPage/userDashboard/RequestDetails.tsx";
 
 export default function App() {
   return (

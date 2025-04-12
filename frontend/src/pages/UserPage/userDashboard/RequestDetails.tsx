@@ -1,5 +1,7 @@
-import PageMeta from "../../common/PageMeta.tsx";
-import PageBreadcrumb from "../../common/PageBreadCrumb.tsx";
+import PageMeta from "../../../components/common/PageMeta.tsx";
+import PageBreadcrumb from "../../../components/common/PageBreadCrumb.tsx";
+import ReqDetailsHeader from "../../../components/user/dashboard/ReqDetailsHeader.tsx";
+import ConformDonorTable from "../../../components/user/dashboard/ConformDonorTable.tsx";
 
 export default function RequestDetails() {
     // Retrieve the request object from localStorage
@@ -25,14 +27,17 @@ export default function RequestDetails() {
                     <h3 className="mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
                         Play Time
                     </h3>
-                    <div className="p-5">
-                        <h2 className="text-lg font-semibold">Request Details</h2>
-                        <p><strong>Request ID:</strong> {request.id}</p>
-                        <p><strong>Request Date:</strong> {request.requestDate}</p>
-                        <p><strong>Blood Group:</strong> {request.bloodGroup}</p>
-                        <p><strong>Hospital:</strong> {request.hospital}</p>
-                        <p><strong>Status:</strong> {request.status}</p>
-                    </div>
+                    < ReqDetailsHeader/>
+
+                    <h3 className="mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
+                        Conform Donors
+                    </h3>
+
+                    <ConformDonorTable />
+
+
+
+
                 </div>
             </div>
         </>
