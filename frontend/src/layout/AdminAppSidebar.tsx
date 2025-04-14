@@ -6,8 +6,7 @@ import {
     CalenderIcon,
     ChevronDownIcon,
     GridIcon,
-    HorizontaLDots,
-    ListIcon,
+    HorizontaLDots, ListIcon,
     TableIcon,
     UserCircleIcon,
 } from "../icons";
@@ -25,22 +24,30 @@ const navItems: NavItem[] = [
     {
         icon: <GridIcon />,
         name: "Dashboard",
-        path: "/",
+        path: "/admin",
+    },
+    {
+        icon: <ListIcon />,
+        name: "Blood Request",
+        path: "/admin-bloodRequest",
+    },
+    {
+        icon: <ListIcon />,
+        name: "Blood Donation",
+        path: "/admin-bloodDonation",
+    },
+    {
+        name: "Users",
+        icon: <TableIcon />,
+        subItems: [
+            { name: "Donor", path: "/admin-donors" },
+            { name: "Requester", path: "/admin-requesters" },
+        ],
     },
     {
         icon: <CalenderIcon />,
         name: "Calendar",
         path: "/calendar",
-    },
-    {
-        name: "Games",
-        icon: <ListIcon />,
-        path: "/form-elements",
-    },
-    {
-        name: "Users",
-        icon: <TableIcon />,
-        path: "/basic-tables",
     },
     {
         icon: <UserCircleIcon />,

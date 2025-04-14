@@ -23,6 +23,10 @@ import Calendar from "./pages/Calendar.tsx";
 import BloodRequest from "./pages/UserPage/userDashboard/BloodRequest.tsx";
 import BloodDonation from "./pages/UserPage/userDashboard/BloodDonation.tsx";
 import RequestDetails from "./pages/UserPage/userDashboard/RequestDetails.tsx";
+import {AdminBloodRequest} from "./pages/UserPage/adminDashboard/AdminBloodRequest.tsx";
+import {AdminBloodDonotion} from "./pages/UserPage/adminDashboard/AdminBloodDonotion.tsx";
+import {AdminUserDonors} from "./pages/UserPage/adminDashboard/AdminUser-donors.tsx";
+import {AdminUserRequesters} from "./pages/UserPage/adminDashboard/AdminUser-requesters.tsx";
 
 export default function App() {
   return (
@@ -33,6 +37,13 @@ export default function App() {
 
           <Route element={<AppLayout role={"admin"}/>}>
             <Route path="/admin" element={<AdminHome />} />
+            {/* Admin Dashboard Layout */}
+            <Route path="/admin-bloodRequest" element={<AdminBloodRequest />} />
+            <Route path="/admin-bloodDonation" element={<AdminBloodDonotion />} />
+            <Route path="/admin-donors" element={<AdminUserDonors />} />
+            <Route path="/admin-requesters" element={<AdminUserRequesters />} />
+
+
           </Route>
 
           {/* AdminPage Layout */}
@@ -64,7 +75,6 @@ export default function App() {
             <Route path="/donor" element={<Donor />} />
             <Route path="/test01" element={<Test01 />} />
 
-
             {/* UserPage Layout */}
           <Route path="/calendar" element={<Calendar />} />
 
@@ -74,14 +84,6 @@ export default function App() {
             <Route path="/bloodDonation" element={<BloodDonation />} />
             <Route path="/requestDetails" element={<RequestDetails />} />
           </Route>
-
-
-
-
-
-
-
-
 
 
 
