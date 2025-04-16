@@ -27,6 +27,8 @@ import {AdminBloodRequest} from "./pages/UserPage/adminDashboard/AdminBloodReque
 import {AdminBloodDonotion} from "./pages/UserPage/adminDashboard/AdminBloodDonotion.tsx";
 import {AdminUserDonors} from "./pages/UserPage/adminDashboard/AdminUser-donors.tsx";
 import {AdminUserRequesters} from "./pages/UserPage/adminDashboard/AdminUser-requesters.tsx";
+import MapWithDirections from "./components/map/MapWithDirections.tsx";
+
 
 export default function App() {
   return (
@@ -83,6 +85,7 @@ export default function App() {
             <Route path="/bloodRequest" element={<BloodRequest />} />
             <Route path="/bloodDonation" element={<BloodDonation />} />
             <Route path="/requestDetails" element={<RequestDetails />} />
+            <Route path="/mapComponent" element={<MapWithDirections />} />
           </Route>
 
 
