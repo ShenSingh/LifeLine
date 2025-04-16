@@ -58192,3 +58192,31 @@ Unconditional classes:
 2025-04-16 22:15:58 [http-nio-8181-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
 2025-04-16 22:15:58 [http-nio-8181-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[HospitalDTO(id=LL0024HP0001, name=National Hospital of Sri Lanka, latitude=6.9271, longitude=79.861 (truncated)...]
 2025-04-16 22:15:58 [http-nio-8181-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/hospital/getAllHospitals", parameters={}
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.zenveus.backend.controller.HospitalController#getHospitals()
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        h1_0.id,
+        h1_0.district,
+        h1_0.latitude,
+        h1_0.longitude,
+        h1_0.name 
+    from
+        hospital h1_0
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[HospitalDTO(id=LL0024HP0001, name=National Hospital of Sri Lanka, latitude=6.9271, longitude=79.861 (truncated)...]
+2025-04-16 22:20:28 [http-nio-8181-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/hospital/getAllHospitals", parameters={}
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.zenveus.backend.controller.HospitalController#getHospitals()
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        h1_0.id,
+        h1_0.district,
+        h1_0.latitude,
+        h1_0.longitude,
+        h1_0.name 
+    from
+        hospital h1_0
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[HospitalDTO(id=LL0024HP0001, name=National Hospital of Sri Lanka, latitude=6.9271, longitude=79.861 (truncated)...]
+2025-04-16 22:20:28 [http-nio-8181-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
