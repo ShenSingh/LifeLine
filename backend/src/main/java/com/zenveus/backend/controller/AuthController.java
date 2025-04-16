@@ -34,6 +34,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO user) {
         try {
+            System.out.println("Login request received: " + user.getEmail() + ", " + user.getPassword()+ ", " + user.getRole());
             UserDTO userDTO = authService.loginUser(user.getEmail(), user.getPassword());
             if (userDTO != null) {
 

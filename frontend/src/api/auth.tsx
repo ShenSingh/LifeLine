@@ -1,22 +1,15 @@
 import axios from 'axios';
-import {checkRole} from "../service/AuthService.tsx";
+import {checkRole, setToken} from "../service/AuthService.tsx";
 import {Hospital} from "./hospital.tsx";
 
-const API_URL = 'http://localhost:8181/a pi/v1/auth/';
+const API_URL = 'http://localhost:8181/api/v1/auth/';
 
-interface RegisterResponse {
-    // Define the expected structure of the response data
-    // For example:
-    id: string;
-    email: string;
-    // Add other fields as needed
-}
-export async function register(fName: string, lName: string, hospital:Hospital, email: string, password: string): Promise<RegisterResponse | null> {
+export async function register(fName: string, lName: string, hospital:Hospital, email: string, password: string){
     try {
 
         const role:string = checkRole(email);
 
-        const response = await axios.post<RegisterResponse>(API_URL + 'register', {
+        const response = await axios.post(API_URL + 'register', {
             username: "",
             firstName: fName,
             lastName:  lName,
@@ -29,6 +22,11 @@ export async function register(fName: string, lName: string, hospital:Hospital, 
             status: "ACTIVE"
         });
 
+        console.log(response.data.data.token);
+
+        if (response.data.data.token) {
+            setToken(response.data.data.token);
+        }
         return response.data;
     } catch (error) {
         console.error(error);
@@ -36,22 +34,24 @@ export async function register(fName: string, lName: string, hospital:Hospital, 
     }
 }
 
-interface LoginResponse {
-    accessToken: string;
-    // Add other fields as needed
-
-}
-
-export async function login(email: string, password: string): Promise<LoginResponse | null> {
+export async function login(email: string, password: string) {
     try {
-        const response = await axios.post<LoginResponse>(API_URL + 'login', {
+        const role:string = checkRole(email);
+        const response = await axios.post(API_URL + 'login', {
             email,
             password,
+            role
 
         });
-        if (response.data.accessToken) {
-            localStorage.setItem('user', JSON.stringify(response.data));
+
+        console.log(response.data.data.token);
+
+        if(checkRole(response.data.data.email) === "ADMIN"){
+            window.location.href = "/admin";
+        }else {
+            window.location.href = "/";
         }
+
         return response.data;
     } catch (error) {
         console.error(error);

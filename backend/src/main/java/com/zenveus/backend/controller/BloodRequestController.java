@@ -1,7 +1,12 @@
 package com.zenveus.backend.controller;
 
 import com.zenveus.backend.dto.BloodRequestDTO;
+import com.zenveus.backend.entity.User;
 import com.zenveus.backend.service.BloodRequestService;
+import com.zenveus.backend.service.UserService;
+import com.zenveus.backend.util.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,10 +21,30 @@ public class BloodRequestController {
 
     @Autowired
     private BloodRequestService bloodRequestService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    @PostMapping
-    public ResponseEntity<?> createBloodRequest(@RequestBody BloodRequestDTO bloodRequestDTO) {
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<?> createBloodRequest(@RequestHeader("Authorization") String token, @RequestBody BloodRequestDTO bloodRequestDTO) {
         try {
+            String tokens = token.replace("Bearer ", "");
+            Claims claims = jwtUtil.getAllClaimsFromToken(tokens);
+            String email = claims.getSubject();
+            System.out.println("Email from token: " + email);
+            User user = userService.getUserByEmail(email);
+            System.out.println("User from token: " + user);
+            if (user == null) {
+                return ResponseEntity.status(401).body("Unauthorized: User not found");
+            }
+
+            // setValues the request data
+            bloodRequestDTO.setStatus("Pending");
+            bloodRequestDTO.setCreatedAt(String.valueOf(System.currentTimeMillis()));
+            bloodRequestDTO.setRequester(user);
+
             BloodRequestDTO createdRequest = bloodRequestService.createBloodRequest(bloodRequestDTO);
             return ResponseEntity.ok(createdRequest);
         } catch (Exception e) {

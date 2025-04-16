@@ -117,19 +117,6 @@ export default function UserInfoCard() {
                   </div>
 
                   <div>
-                    <Label>X.com</Label>
-                    <Input type="text" value="https://x.com/PimjoHQ" />
-                  </div>
-
-                  <div>
-                    <Label>Linkedin</Label>
-                    <Input
-                      type="text"
-                      value="https://www.linkedin.com/company/pimjo"
-                    />
-                  </div>
-
-                  <div>
                     <Label>Instagram</Label>
                     <Input type="text" value="https://instagram.com/PimjoHQ" />
                   </div>

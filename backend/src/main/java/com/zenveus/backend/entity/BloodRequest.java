@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 @Table(name = "blood_request")
 public class BloodRequest {
 

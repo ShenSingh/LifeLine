@@ -1,15 +1,81 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Modal } from "../../uiComponent/modal";
+import getHospitalList, {Hospital} from "../../../api/hospital.tsx";
+import {BloodRequest, createBloodRequest} from "../../../api/bloodRequest.tsx";
 
 export default function DonorFindForm() {
         const [isModalOpen, setIsModalOpen] = useState(false);
         const [isAgreed, setIsAgreed] = useState(false);
+        const [hospitals, setHospitals] = useState<Array<{ value: string, label: string, original: Hospital }>>([]);
+        const [requestData, setRequestData] = useState({
+                bloodType: "",
+                email: "",
+                phoneNumber: "",
+                hospital:{
+                        id: "",
+                        name: "",
+                        latitude: "",
+                        longitude: "",
+                        district: ""
+                },
+        });
 
-        const handleFormSubmit = (e: React.FormEvent) => {
+
+
+
+        useEffect(() => {
+                const fetchHospitals = async () => {
+                        try {
+                                const response = await getHospitalList();
+                                if (response) {
+                                        setHospitals(
+                                            response.map((hospital) => ({
+                                                    value: hospital.id,
+                                                    label: hospital.name,
+                                                    original: hospital
+                                            }))
+                                        );
+                                }
+                        } catch (error) {
+                                console.error(error);
+                        }
+                };
+
+                fetchHospitals();
+        }, []);
+
+
+
+        const handleFormSubmit = async (e: React.FormEvent) => {
                 if (!isAgreed) {
                         e.preventDefault();
                         alert("Please agree to the Privacy Policy before submitting.");
                 }
+                e.preventDefault();
+
+                const request: BloodRequest = {
+                        bloodType: requestData.bloodType,
+                        hospital: {
+                                id: requestData.hospital.id,
+                                name: requestData.hospital.name,
+                                latitude: requestData.hospital.latitude,
+                                longitude: requestData.hospital.longitude,
+                                district: requestData.hospital.district
+                        }
+
+                }
+
+                const respons = await createBloodRequest(request);
+
+                if (respons.data.code === 201 || respons.data.code === 200) {
+                        alert("Blood request created successfully!");
+                }
+                else {
+                        alert("Failed to create blood request.");
+                }
+
+
+
         };
 
         return (
@@ -72,10 +138,17 @@ export default function DonorFindForm() {
                                                             <select
                                                                 id="bloodType"
                                                                 name="bloodType"
+                                                                value={requestData.bloodType}
+                                                                onChange={(e) =>
+                                                                    setRequestData({
+                                                                            ...requestData,
+                                                                            bloodType: e.target.value,
+                                                                    })
+                                                                }
                                                                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                                             >
                                                                     <option value="">Select your blood type</option>
-                                                                    {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((type) => (
+                                                                    {["A_POSITIVE", "A_NEGATIVE", "B_POSITIVE", "B_NEGATIVE", "AB_POSITIVE", "AB_NEGATIVE", "O_POSITIVE", "O_NEGATIVE"].map((type) => (
                                                                         <option key={type} value={type}>
                                                                                 {type}
                                                                         </option>
@@ -83,49 +156,33 @@ export default function DonorFindForm() {
                                                             </select>
                                                     </div>
 
-                                                    {/* Email */}
-                                                    <div>
-                                                            <label htmlFor="email"
-                                                                   className="block text-sm font-medium text-red-500">
-                                                                    Email
-                                                            </label>
-                                                            <input
-                                                                type="email"
-                                                                id="email"
-                                                                name="email"
-                                                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                            />
-                                                    </div>
 
-                                                    {/* Phone Number & Hospital */}
-                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                            <div>
-                                                                    <label htmlFor="number"
-                                                                           className="block text-sm font-medium text-red-500">
-                                                                            Phone Number
-                                                                    </label>
-                                                                    <input
-                                                                        type="number"
-                                                                        id="number"
-                                                                        name="number"
-                                                                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                                    />
-                                                            </div>
+                                                    {/*Hospital */}
+                                                    <div className="grid grid-cols-1 gap-4">
                                                             <div>
                                                                     <label htmlFor="hospital"
                                                                            className="block text-sm font-medium text-red-500">
                                                                             Hospital
                                                                     </label>
+
                                                                     <select
                                                                         id="hospital"
                                                                         name="hospital"
                                                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+                                                                        value={requestData.hospital.id || ""}
+                                                                        onChange={(e) =>
+                                                                            setRequestData({
+                                                                                    ...requestData,
+                                                                                    hospital: hospitals.find((h) => h.value === e.target.value)?.original || requestData.hospital,
+                                                                            })
+                                                                        }
                                                                     >
                                                                             <option value="">Select your hospital
                                                                             </option>
-                                                                            {["Hospital 1", "Hospital 2", "Hospital 3"].map((hospital) => (
-                                                                                <option key={hospital} value={hospital}>
-                                                                                        {hospital}
+                                                                            {hospitals.map((hospital) => (
+                                                                                <option key={hospital.value}
+                                                                                        value={hospital.value}>
+                                                                                        {hospital.label}
                                                                                 </option>
                                                                             ))}
                                                                     </select>

@@ -64,17 +64,25 @@ public class JwtUtil implements Serializable {
     public String generateToken(@Valid UserDTO userDTO) {
         System.out.println("Generating Token for: " + userDTO.getEmail()); // Log the user email
         Map<String, Object> claims = new HashMap<>();
+        System.out.println("User Role: " + userDTO.getRole()); // Log the user role
         claims.put("role", "ROLE_" + userDTO.getRole()); // Ensure ROLE_ prefix is added
+
         System.out.println("Using Secret Key: " + secretKey); // Log the secret key
         return doGenerateToken(claims, userDTO.getEmail());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
+        System.out.println("doGen Secret Key: " + secretKey); // Log the secret key
+        if (secretKey == null) {
+            secretKey = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566DF423F4428472B4B6250655368566D";
+            System.out.println("Secret Key is null, using default key: " + secretKey); // Log the default key
+        }
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+
                 .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }
 
