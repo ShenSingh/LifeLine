@@ -13,11 +13,21 @@ export default function HeaderTitle({ title, img, description }: HeaderTitleProp
         >
             <div className="hero-overlay bg-opacity-50"></div>
             <div className="hero-content flex items-center justify-center text-center text-black">
-                <div>
-                    <h1 className="text-5xl text-red-50 font-bold">{title}</h1>
-                    <p className="py-6">{description}</p>
-                </div>
+                <div className="mt-45">
+                    {title === "About Us" ? (
+                        <>
+                            <h1 className="text-5xl text-black-500 font-bold">{title}</h1>
+                            <p className="py-6 text-xl text-red">{description}</p>
+                        </>
+                    ) : (
+                        <>
+                            <h1 className="text-5xl text-red-50 font-bold">{title}</h1>
+                            <p className="py-6 text-xl text-white">{description}</p>
+                        </>
+                    )}
             </div>
         </div>
-    );
+</div>
+)
+    ;
 }
