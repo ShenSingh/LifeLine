@@ -5,24 +5,13 @@ export default function DonorRegForm() {
 
         // State to manage form data
         const [formData, setFormData] = useState({
-                name: '',
                 age: '',
                 gender: '',
-                phone: '',
-                email: '',
-                password: '',
                 bloodType: '',
-                city: '',
-                province: '',
-                numberOfDonations: '',
-                lastDonationDate: '',
                 donateRegularly: '',
                 longTermIllness: '',
-                illnessDescription: '',
                 takingMedicine: '',
-                medicineDescription: '',
                 hadSurgery: '',
-                surgeryDescription: '',
         });
 
         // Handle change for form inputs
@@ -36,7 +25,7 @@ export default function DonorRegForm() {
 
         // Handle form step change
         const nextStep = () => {
-                if (step < 4) {
+                if (step < 3) {
                         setStep(step + 1);
                 }
         };
@@ -97,51 +86,36 @@ export default function DonorRegForm() {
                                     <div className="flex flex-col border border-gray-200 rounded-xl p-[75px] lg:p-[75px] bg-white">
                                             <h2 className="text-xl font-semibold text-gray-800">Fill in the form</h2>
 
-                                            <ul className="steps">
-                                                    <li
-                                                        data-content="✓"
-                                                        className={`step ${step === 1 ? 'step-primary' : 'step-neutral'}`}
-                                                    >
-                                                            Step 1
-                                                    </li>
-                                                    <li
-                                                        data-content="✓"
-                                                        className={`step ${step === 2 ? 'step-primary' : 'step-neutral'}`}
-                                                    >
-                                                            Step 2
-                                                    </li>
-                                                    <li
-                                                        data-content="✓"
-                                                        className={`step ${step === 3 ? 'step-primary' : 'step-neutral'}`}
-                                                    >
-                                                            Step 3
-                                                    </li>
-                                                    <li
-                                                        data-content="✓"
-                                                        className={`step ${step === 4 ? 'step-primary' : 'step-neutral'}`}
-                                                    >
-                                                            Step 4
-                                                    </li>
-                                            </ul>
+                                            {/* Steps Indicator */}
+                                            <div className="flex items-center justify-between mb-8">
+                                                    {['Step 1', 'Step 2', 'Step 3'].map((_label, index) => (
+                                                        <div key={index} className="flex items-center">
+                                                                <div
+                                                                    className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${
+                                                                        step === index + 1
+                                                                            ? 'bg-blue-600'
+                                                                            : step > index + 1
+                                                                                ? 'bg-green-500'
+                                                                                : 'bg-gray-300'
+                                                                    }`}
+                                                                >
+                                                                        {step > index + 1 ? '✓' : index + 1}
+                                                                </div>
+                                                                {index < 2 && (
+                                                                    <div
+                                                                        className={`h-1 w-10 sm:w-20 ${
+                                                                            step > index + 1 ? 'bg-green-500' : 'bg-gray-300'
+                                                                        }`}
+                                                                    ></div>
+                                                                )}
+                                                        </div>
+                                                    ))}
+                                            </div>
 
                                             <form className="mt-6 space-y-4">
                                                     {/* Step 1 */}
                                                     {step === 1 && (
                                                         <div>
-                                                                <div>
-                                                                        <label htmlFor="name" className="block text-sm font-medium text-red-500">
-                                                                                Name
-                                                                        </label>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="name"
-                                                                            name="name"
-                                                                            value={formData.name}
-                                                                            onChange={handleChange}
-                                                                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                                        />
-                                                                </div>
-
                                                                 <div>
                                                                         <label htmlFor="age" className="block text-sm font-medium text-red-500">
                                                                                 Age
@@ -174,38 +148,6 @@ export default function DonorRegForm() {
                                                                 </div>
 
                                                                 <div>
-                                                                        <label htmlFor="phone" className="block text-sm font-medium text-red-500">
-                                                                                Phone
-                                                                        </label>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="phone"
-                                                                            name="phone"
-                                                                            value={formData.phone}
-                                                                            onChange={handleChange}
-                                                                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                                        />
-                                                                </div>
-                                                                <div>
-                                                                        <label htmlFor="email" className="block text-sm font-medium text-red-500">
-                                                                                Email
-                                                                        </label>
-                                                                        <input
-                                                                            type="email"
-                                                                            id="email"
-                                                                            name="email"
-                                                                            value={formData.email}
-                                                                            onChange={handleChange}
-                                                                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                                        />
-                                                                </div>
-                                                        </div>
-                                                    )}
-
-                                                    {/* Step 2 */}
-                                                    {step === 2 && (
-                                                        <div>
-                                                                <div>
                                                                         <label htmlFor="bloodType" className="block text-sm font-medium text-red-500">
                                                                                 Blood Type
                                                                         </label>
@@ -224,28 +166,17 @@ export default function DonorRegForm() {
                                                                                 ))}
                                                                         </select>
                                                                 </div>
-
-                                                                <div>
-                                                                        <label htmlFor="city" className="block text-sm font-medium text-red-500">
-                                                                                City
-                                                                        </label>
-                                                                        <input
-                                                                            type="text"
-                                                                            id="city"
-                                                                            name="city"
-                                                                            value={formData.city}
-                                                                            onChange={handleChange}
-                                                                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-                                                                        />
-                                                                </div>
                                                         </div>
                                                     )}
 
-                                                    {/* Step 3 */}
-                                                    {step === 3 && (
+                                                    {/* Step 2 */}
+                                                    {step === 2 && (
                                                         <div>
                                                                 <div>
-                                                                        <label htmlFor="donateRegularly" className="block text-sm font-medium text-red-500">
+                                                                        <label
+                                                                            htmlFor="donateRegularly"
+                                                                            className="block text-sm font-medium text-red-500"
+                                                                        >
                                                                                 I would like to Donate Blood
                                                                         </label>
                                                                         <select
@@ -262,7 +193,10 @@ export default function DonorRegForm() {
                                                                 </div>
 
                                                                 <div>
-                                                                        <label htmlFor="longTermIllness" className="block text-sm font-medium text-red-500">
+                                                                        <label
+                                                                            htmlFor="longTermIllness"
+                                                                            className="block text-sm font-medium text-red-500"
+                                                                        >
                                                                                 Are you suffering from any long-term illness?
                                                                         </label>
                                                                         <select
@@ -280,11 +214,14 @@ export default function DonorRegForm() {
                                                         </div>
                                                     )}
 
-                                                    {/* Step 4 */}
-                                                    {step === 4 && (
+                                                    {/* Step 3 */}
+                                                    {step === 3 && (
                                                         <div>
                                                                 <div>
-                                                                        <label htmlFor="takingMedicine" className="block text-sm font-medium text-red-500">
+                                                                        <label
+                                                                            htmlFor="takingMedicine"
+                                                                            className="block text-sm font-medium text-red-500"
+                                                                        >
                                                                                 Are you taking any medicine?
                                                                         </label>
                                                                         <select
@@ -336,7 +273,7 @@ export default function DonorRegForm() {
                                                                 onClick={nextStep}
                                                                 className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none"
                                                             >
-                                                                    Next
+                                                                    {step === 3 ? 'Submit' : 'Next'}
                                                             </button>
                                                     </div>
                                             </form>
