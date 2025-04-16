@@ -238,35 +238,26 @@ const AdminAppSidebar: React.FC = () => {
             onMouseLeave={() => setIsHovered(false)}
         >
             <div
-                className={`py-8 flex ${
+                className={`justify-center py-4 flex items-center gap-x-2 ${
                     !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
                 }`}
             >
-                <Link to="/">
+                <Link to="/" className="flex items-center gap-x-2">
                     {isExpanded || isHovered || isMobileOpen ? (
                         <>
                             <img
-                                className="dark:hidden"
-                                src="/images/logo/logo.svg"
+                                src="/public/assets/image/logo/lifeline.png"
                                 alt="Logo"
-                                width={150}
-                                height={40}
+                                className="w-10 h-10 rounded-full"
                             />
-                            <img
-                                className="hidden dark:block"
-                                src="/images/logo/logo-dark.svg"
-                                alt="Logo"
-                                width={150}
-                                height={40}
-                            />
+                            <h1 className="text-2xl font-bold text-red-600 dark:text-white">
+                                LifeLine
+                            </h1>
                         </>
                     ) : (
-                        <img
-                            src="/images/logo/logo-icon.svg"
-                            alt="Logo"
-                            width={32}
-                            height={32}
-                        />
+                        <h1 className="text-2xl font-bold text-red-600 dark:text-white">
+                            LifeLine
+                        </h1>
                     )}
                 </Link>
             </div>
@@ -284,13 +275,13 @@ const AdminAppSidebar: React.FC = () => {
                                 {isExpanded || isHovered || isMobileOpen ? (
                                     "Menu"
                                 ) : (
-                                    <HorizontaLDots className="size-6" />
+                                    <HorizontaLDots className="size-6"/>
                                 )}
                             </h2>
                             {renderMenuItems(navItems, "main")}
                         </div>
                         <div className="">
-                            <h2
+                        <h2
                                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
                                     !isExpanded && !isHovered
                                         ? "lg:justify-center"

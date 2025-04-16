@@ -1,8 +1,4 @@
-const stats = [
-    { id: 1, name: 'ලැබුණු දායකයන්', value: '10,000+' },
-    { id: 2, name: 'කැඳවුම් කළ දායම්', value: '500,000+' },
-    { id: 3, name: 'මෙම වසරේ නව ලියාපදිංචි', value: '20,000+' },
-]
+
 
 export default function HomeRegComp() {
     return (

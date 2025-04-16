@@ -84,16 +84,11 @@ const AppHeader: React.FC = () => {
           </button>
 
           <Link to="/" className="lg:hidden">
-            <img
-              className="dark:hidden"
-              src="./images/logo/logo.svg"
-              alt="Logo"
-            />
-            <img
-              className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
-              alt="Logo"
-            />
+            <h2 className="
+                text-xl font-bold text-red-500 dark:text-white lg:mr-8 lg:text-2xl
+            ">
+              LifeLine
+            </h2>
           </Link>
 
           <button
