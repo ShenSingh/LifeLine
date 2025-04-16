@@ -80,6 +80,10 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.2.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>
@@ -94,6 +98,11 @@
 				<artifactId>jakarta.validation-api</artifactId>
 				<version>3.0.0</version> <!-- Or the version you prefer -->
 			</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 
 			<!-- Hibernate Validator (Implementation of Jakarta Bean Validation) -->
 			<dependency>
