@@ -1,9 +1,21 @@
+import { useState } from "react";
+import { Modal } from "../../uiComponent/modal";
+
 export default function DonorFindForm() {
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const [isAgreed, setIsAgreed] = useState(false);
+
+        const handleFormSubmit = (e: React.FormEvent) => {
+                if (!isAgreed) {
+                        e.preventDefault();
+                        alert("Please agree to the Privacy Policy before submitting.");
+                }
+        };
+
         return (
             <div className="max-w-[85rem] px-[75px] py-10 sm:px-[75px] lg:px-[75px] lg:py-14 mx-auto bg-gradient-to-r from-white to-blue-500">
-                    {/* Grid Layout */}
                     <div className="grid md:grid-cols-2 items-center gap-12">
-                            {/* Left Section - Information */}
+                            {/* Left Section */}
                             <div>
                                     <h1 className="text-4xl font-bold text-gray-800 sm:text-5xl lg:text-6xl lg:leading-tight">
                                             අපව අමතන්න
@@ -44,17 +56,17 @@ export default function DonorFindForm() {
                                             </ul>
                                     </div>
                             </div>
-                            {/* End Left Section */}
 
-                            {/* Right Section - Form */}
+                            {/* Right Section */}
                             <div className="relative">
-                                    <div className="flex flex-col border border-gray-200 rounded-xl p-[75px] lg:p-[75px] bg-white">
+                                    <div
+                                        className="flex flex-col border border-gray-200 rounded-xl p-[75px] lg:p-[75px] bg-white">
                                             <h2 className="text-xl font-semibold text-gray-800">Fill in the form</h2>
-
-                                            <form className="mt-6 space-y-4 ">
+                                            <form className="mt-6 space-y-4" onSubmit={handleFormSubmit}>
                                                     {/* Blood Type */}
                                                     <div>
-                                                            <label htmlFor="bloodType" className="block text-sm font-medium text-red-500">
+                                                            <label htmlFor="bloodType"
+                                                                   className="block text-sm font-medium text-red-500">
                                                                     Blood Type
                                                             </label>
                                                             <select
@@ -73,7 +85,8 @@ export default function DonorFindForm() {
 
                                                     {/* Email */}
                                                     <div>
-                                                            <label htmlFor="email" className="block text-sm font-medium text-red-500">
+                                                            <label htmlFor="email"
+                                                                   className="block text-sm font-medium text-red-500">
                                                                     Email
                                                             </label>
                                                             <input
@@ -84,11 +97,12 @@ export default function DonorFindForm() {
                                                             />
                                                     </div>
 
-                                                    {/* Number & Province */}
+                                                    {/* Phone Number & Hospital */}
                                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                             <div>
-                                                                    <label htmlFor="number" className="block text-sm font-medium text-red-500">
-                                                                            Number
+                                                                    <label htmlFor="number"
+                                                                           className="block text-sm font-medium text-red-500">
+                                                                            Phone Number
                                                                     </label>
                                                                     <input
                                                                         type="number"
@@ -98,7 +112,8 @@ export default function DonorFindForm() {
                                                                     />
                                                             </div>
                                                             <div>
-                                                                    <label htmlFor="hospital" className="block text-sm font-medium text-red-500">
+                                                                    <label htmlFor="hospital"
+                                                                           className="block text-sm font-medium text-red-500">
                                                                             Hospital
                                                                     </label>
                                                                     <select
@@ -106,12 +121,9 @@ export default function DonorFindForm() {
                                                                         name="hospital"
                                                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-transparent rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                                                     >
-                                                                            <option value="">Select your hospital</option>
-                                                                            {[
-                                                                                    "hos1",
-                                                                                    "ho2",
-                                                                                    "ho3",
-                                                                            ].map((hospital) => (
+                                                                            <option value="">Select your hospital
+                                                                            </option>
+                                                                            {["Hospital 1", "Hospital 2", "Hospital 3"].map((hospital) => (
                                                                                 <option key={hospital} value={hospital}>
                                                                                         {hospital}
                                                                                 </option>
@@ -127,15 +139,19 @@ export default function DonorFindForm() {
                                                                 name="agree"
                                                                 type="checkbox"
                                                                 className="shrink-0 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500"
+                                                                onChange={(e) => setIsAgreed(e.target.checked)}
                                                             />
-                                                            <label htmlFor="agree" className="ml-3 text-sm text-gray-600">
+                                                            <label htmlFor="agree"
+                                                                   className="ml-3 text-sm text-gray-600">
                                                                     By submitting this form, I acknowledge the{" "}
-                                                                    <a
-                                                                        href="#"
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => setIsModalOpen(true)}
                                                                         className="text-blue-600 decoration-2 hover:underline font-medium"
                                                                     >
                                                                             Privacy Policy
-                                                                    </a>
+                                                                    </button>
+                                                                    .
                                                             </label>
                                                     </div>
 
@@ -148,17 +164,28 @@ export default function DonorFindForm() {
                                                                     Send Inquiry
                                                             </button>
                                                     </div>
-
-                                                    {/* Message */}
-                                                    <div className="mt-3 text-center">
-                                                            <p className="text-sm text-gray-500">We'll get back to you in 1-2 business days.</p>
-                                                    </div>
                                             </form>
                                     </div>
                             </div>
-                            {/* End Right Section */}
                     </div>
-                    {/* End Grid */}
+
+                    {/* Privacy Policy Modal */}
+                    <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                            <div className="p-6">
+                                    <h2 className="text-xl font-bold text-gray-800 mb-4">Privacy Policy</h2>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                            Your personal information is protected and will only be used to fulfill your
+                                            blood donation
+                                            request. We do not share your information with third parties.
+                                    </p>
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                    >
+                                            Close
+                                    </button>
+                            </div>
+                    </Modal>
             </div>
         );
 }

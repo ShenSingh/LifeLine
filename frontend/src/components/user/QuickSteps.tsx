@@ -60,7 +60,7 @@ export default function BloodRequestSteps() {
             </div>
             <div className="text-center">
                 <a
-                    href="/register"
+                    href="/signup"
                     className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-red-600 hover:bg-red-700 focus:shadow-outline focus:outline-none"
                 >
                     දැන් ලියාපදිංචි වන්න
