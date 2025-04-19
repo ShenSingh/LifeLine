@@ -43,6 +43,9 @@ export async function login(email: string, password: string) {
             role
 
         });
+        if (response.data.data.token) {
+            setToken(response.data.data.token);
+        }
 
         console.log(response.data.data.token);
 

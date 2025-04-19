@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DonorServiceImpl implements DonorService {
 
@@ -41,5 +43,13 @@ public class DonorServiceImpl implements DonorService {
         Donor donor = modelMapper.map(donorDTO, Donor.class);
         donor = donorRepository.save(donor);
         return modelMapper.map(donor, DonorDTO.class);
+    }
+
+    @Override
+    public List<DonorDTO> getAllDonors() {
+        List<Donor> donors = donorRepository.findAll();
+        return donors.stream()
+                .map(donor -> modelMapper.map(donor, DonorDTO.class))
+                .toList();
     }
 }

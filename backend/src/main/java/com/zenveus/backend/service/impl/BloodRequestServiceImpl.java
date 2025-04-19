@@ -1,8 +1,6 @@
 package com.zenveus.backend.service.impl;
 
-import com.zenveus.backend.dto.BloodRequestDTO;
-import com.zenveus.backend.dto.MessageDTO;
-import com.zenveus.backend.dto.NotificationDTO;
+import com.zenveus.backend.dto.*;
 import com.zenveus.backend.entity.*;
 import com.zenveus.backend.repository.*;
 import com.zenveus.backend.service.BloodRequestService;
@@ -38,88 +36,85 @@ public class BloodRequestServiceImpl implements BloodRequestService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private HospitalRepository hospitalRepository;
+
 
     @Override
     public BloodRequestDTO createBloodRequest(BloodRequestDTO bloodRequestDTO) {
-
         try {
+            // 1. Fetch required entities from DB using DTO IDs
+            User requester = userRepository.findById(bloodRequestDTO.getRequester().getId())
+                    .orElseThrow(() -> new RuntimeException("Requester not found"));
 
-            bloodRequestDTO.setId(null);
-            BloodRequest bloodRequest = bloodRequestRepository.save(modelMapper.map(bloodRequestDTO, BloodRequest.class));
+            Hospital hospital = hospitalRepository.findById(bloodRequestDTO.getHospital().getId())
+                    .orElseThrow(() -> new RuntimeException("Hospital not found"));
 
+            // 2. Create and populate BloodRequest entity
+            BloodRequest bloodRequest = new BloodRequest();
+            bloodRequest.setRequester(requester);
+            bloodRequest.setHospital(hospital);
+            bloodRequest.setBloodType(bloodRequestDTO.getBloodType().name());
+            bloodRequest.setStatus("PENDING");  // Default status
+
+            // 3. Save the blood request
+            BloodRequest savedRequest = bloodRequestRepository.save(bloodRequest);
+            System.out.println("BloodRequest Saved Successfully: " + savedRequest.getId());
+
+            // 4. Convert saved entity back to DTO with nested objects
+            BloodRequestDTO responseDTO = new BloodRequestDTO();
+            responseDTO.setId(savedRequest.getId());
+            responseDTO.setBloodType(BloodType.valueOf(savedRequest.getBloodType()));
+            responseDTO.setStatus(savedRequest.getStatus());
+            responseDTO.setCreatedAt(savedRequest.getCreatedAt());
+
+            // Map nested entities to DTOs
+            responseDTO.setRequester(modelMapper.map(savedRequest.getRequester(), UserDTO.class));
+            responseDTO.setHospital(modelMapper.map(savedRequest.getHospital(), HospitalDTO.class));
+
+            // 5. Notification and messaging logic
             LocalDateTime timestamp = LocalDateTime.now();
+            Message message = new Message();
+            message.setBloodRequest(savedRequest);
+            message.setTimestamp(timestamp);
+            messageRepository.save(message);
+            System.out.println("Message Saved Successfully");
 
-            if (bloodRequest != null) {
-                MessageDTO messageDTO = new MessageDTO();
-                messageDTO.setBloodRequest(bloodRequest);
-                messageDTO.setTimestamp(timestamp);
+            // 6. Donor notification logic
+            BloodType requestedType = BloodType.valueOf(savedRequest.getBloodType());
+            donorRepository.findByBloodType(requestedType).forEach(donor -> {
+                Notification notification = new Notification();
+                notification.setDonor((Donor) donor);
+                notification.setMessage(message);
+                notification.setStatus("PENDING");
+                notification.setCreatedAt(timestamp);
+                notificationRepository.save(notification);
 
-                Message message = messageRepository.save(modelMapper.map(messageDTO, Message.class));
+                User donorUser = ((Donor) donor).getUser();
+                sendMail(
+                        donorUser.getFirstName(),
+                        donorUser.getEmail(),
+                        savedRequest,
+                        notification.getId()
+                );
+            });
 
-                if (message != null) {
-                    // filter doner
-                    List<Donor> donors = new ArrayList<>();
+            return responseDTO;
 
-                    BloodType reqBloodType = BloodType.valueOf(bloodRequest.getBloodType());
-
-                    for(Donor donor : donorRepository.findAll()) {
-
-                        BloodType bloodType = donor.getBloodType();
-
-                        if(donor.getBloodType().equals(reqBloodType)) {
-                            System.out.println(bloodRequest.getBloodType());
-                            donors.add(donor);
-                        }
-                    }
-
-                    System.out.println("donors"+donors);
-
-                    for(Donor donor : donors) {
-                        User user = userRepository.findById(donor.getId()).orElseThrow(() -> new RuntimeException("User not found"));
-
-                        NotificationDTO notificationDTO =new NotificationDTO();
-                        notificationDTO.setDonor(donor);
-                        notificationDTO.setMessage(message);
-                        notificationDTO.setStatus("pending");
-                        notificationDTO.setCreatedAt(timestamp);
-
-
-                        // save notification
-                        Notification notification = notificationRepository.save(modelMapper.map(notificationDTO, Notification.class));
-
-                        if (notification != null) {
-                            System.out.println("Notification sent to donor");
-
-                            System.out.println(notification.getId()+"  not id eka");
-
-                            // send mail
-                            boolean sendOk =sendMail(user.getFirstName(),user.getEmail(), bloodRequest, notification.getId());
-
-                        }else {
-                            return null;
-                        }
-                    }
-
-                    return modelMapper.map(bloodRequest, BloodRequestDTO.class);
-                    // get donor mail sent
-                }
-
-            }else {
-                throw new RuntimeException("Blood request not found");
-            }
-
-
-            return null;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error creating blood request: " + e.getMessage(), e);
         }
-
-
     }
 
     private boolean sendMail(String firstName, String email, BloodRequest bloodRequest, String notificationId) {
         try {
             Mail mail = new Mail();
+
+            String[] locationParts = bloodRequest.getHospital().getName().split(",\\s*");
+            String city = locationParts.length > 1 ? locationParts[1] : "Unknown";
+            String country = locationParts.length > 2 ? locationParts[2] : "Unknown";
+
+            String pass = city+", "+country;
 
             String emailContent = "<html>" +
                     "<body>" +
@@ -129,6 +124,7 @@ public class BloodRequestServiceImpl implements BloodRequestService {
                     "<p>We have a blood request for " + bloodRequest.getBloodType() + " from " + bloodRequest.getHospital().getName() + ".</p>" +
                     "<p>Please click the button below if you are able to donate:</p>" +
                     "<a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">Done</a>" +
+                    "<a href=\"http://localhost:5173/mapComponent?location=" + java.net.URLEncoder.encode(pass, java.nio.charset.StandardCharsets.UTF_8) + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">View Direction</a>" +
                     "</body>" +
                     "</html>";
 
@@ -159,8 +155,12 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
     @Override
     public List<BloodRequestDTO> getAllBloodRequests() {
-        return bloodRequestRepository.findAll().stream()
+        List<BloodRequestDTO> bloodRequests = bloodRequestRepository.findAll().stream()
                 .map(bloodRequest -> modelMapper.map(bloodRequest, BloodRequestDTO.class))
                 .collect(Collectors.toList());
+
+        bloodRequests.forEach(bloodRequest -> System.out.println("Blood Requestsssssss"+bloodRequest));
+
+        return bloodRequests;
     }
 }

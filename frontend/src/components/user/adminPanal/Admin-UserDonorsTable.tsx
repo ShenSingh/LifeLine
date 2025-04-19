@@ -12,8 +12,6 @@ export interface AdminDonors {
   donorId: string;
   name: string;
   bloodGroup: string;
-  email: string;
-  donationCount: number;
   hospital: string;
   status: string;
 }
@@ -33,8 +31,6 @@ const tableData: AdminDonors[] = [
     donorId: "D001",
     name: "John Doe",
     bloodGroup: "A+",
-    email: "g@gmail.com",
-    donationCount: 5,
     hospital: "City Hospital",
     status: "Active",
   },
@@ -42,8 +38,6 @@ const tableData: AdminDonors[] = [
     donorId: "D001",
     name: "John Doe",
     bloodGroup: "A+",
-    email: "g@gmail.com",
-    donationCount: 5,
     hospital: "City Hospital",
     status: "Active",
   },
@@ -51,8 +45,6 @@ const tableData: AdminDonors[] = [
     donorId: "D001",
     name: "John Doe",
     bloodGroup: "A+",
-    email: "g@gmail.com",
-    donationCount: 5,
     hospital: "City Hospital",
     status: "Active",
   },
@@ -89,18 +81,6 @@ export default function AdminUserDonorsTable() {
                   >
                     Blood Group
                   </TableCell>
-                    <TableCell
-                        isHeader
-                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                    Email
-                    </TableCell>
-                    <TableCell
-                        isHeader
-                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                    Donation Count
-                    </TableCell>
                   <TableCell
                       isHeader
                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -135,13 +115,6 @@ export default function AdminUserDonorsTable() {
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                         {request.bloodGroup}
                       </TableCell>
-                        <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                            {request.email}
-                        </TableCell>
-                      <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {request.donationCount}
-                      </TableCell>
-
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                         {request.hospital}
                       </TableCell>

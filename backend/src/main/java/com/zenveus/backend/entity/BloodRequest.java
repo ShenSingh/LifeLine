@@ -1,5 +1,6 @@
 package com.zenveus.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class BloodRequest {
 
     @ManyToOne
     @JoinColumn(name = "requester_id", nullable = false)
+    @JsonIgnore
     private User requester;
 
     private String bloodType;

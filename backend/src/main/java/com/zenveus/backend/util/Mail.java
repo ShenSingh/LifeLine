@@ -30,7 +30,7 @@ public class Mail implements Runnable {
         System.out.println("sending mail");
 
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("lifelinesystem34@gmail.com", "guwtdagzyuphskgk");  // have to change some settings in SMTP
             }
         });
@@ -50,7 +50,7 @@ public class Mail implements Runnable {
         if (msg != null) {
             try {
                 System.out.println("sending mail- call outMail");
-                System.out.println("mail-to" + to);
+                System.out.println("mail-to " + to);
                 outMail();
             } catch (MessagingException e) {
                 throw new RuntimeException(e);

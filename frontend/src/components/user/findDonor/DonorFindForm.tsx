@@ -65,14 +65,27 @@ export default function DonorFindForm() {
 
                 }
 
-                const respons = await createBloodRequest(request);
+                const response = await createBloodRequest(request);
+                console.log("Response from API:", response);
+                if (response) {
+                        alert("Request submitted successfully!");
+                        setRequestData({
+                                bloodType: "",
+                                email: "",
+                                phoneNumber: "",
+                                hospital:{
+                                        id: "",
+                                        name: "",
+                                        latitude: "",
+                                        longitude: "",
+                                        district: ""
+                                },
+                        });
+                } else {
+                        alert("Failed to submit request.");
+                }
 
-                if (respons.data.code === 201 || respons.data.code === 200) {
-                        alert("Blood request created successfully!");
-                }
-                else {
-                        alert("Failed to create blood request.");
-                }
+
 
 
 

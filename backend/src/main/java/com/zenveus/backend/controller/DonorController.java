@@ -10,6 +10,8 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/donor")
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -54,5 +56,10 @@ public class DonorController {
     @PutMapping
     public DonorDTO updateDonor(@RequestBody DonorDTO donorDTO) {
         return donorService.updateDonor(donorDTO);
+    }
+
+    @GetMapping(value = "/all")
+    public List<DonorDTO> getAllDonors() {
+        return donorService.getAllDonors();
     }
 }

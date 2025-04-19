@@ -30,3 +30,20 @@ export const createDonor = async (donor: Donor) => {
         throw error;
     }
 };
+
+export const loadAllDonors = async () => {
+    console.log('Loading all donors');
+    try {
+        const response = await axios.get(API_BASE_URL + '/all', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        console.log('Response:', JSON.stringify(response.data));
+        return response.data;
+    } catch (error) {
+        console.error('Error loading all donors:', error);
+        throw error;
+    }
+}

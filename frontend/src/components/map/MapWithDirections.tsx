@@ -1,10 +1,16 @@
-import { useEffect, useRef } from "react";
+import {useEffect, useRef} from "react";
 
 const MapWithDirections = () => {
     const mapRef = useRef<google.maps.Map | null>(null);
     const directionsRendererRef = useRef<google.maps.DirectionsRenderer | null>(null);
 
-    const hospitalLocations = "Dekatana, Sri Lanka";
+    const currentUrlParams = new URLSearchParams(window.location.search);
+    console.log("Current URL Params:", currentUrlParams.toString());
+
+    const hospitalLocations = decodeURIComponent(currentUrlParams.get("location") || "")
+        .replace(/\+/g, " ") // Replace '+' with space
+        .replace(/%2C/g, ","); // Replace '%2C' with a comma
+    console.log("Hospital Locations:", hospitalLocations);
 
     useEffect(() => {
         // Initialize the map

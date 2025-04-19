@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 @Data
 public class BloodRequestDTO {
     private String id;
-    private User requester;
+    private UserDTO requester;
     private BloodType bloodType;
-    private Hospital hospital;
+    private HospitalDTO hospital;
     private String status;
     private String createdAt;
 
