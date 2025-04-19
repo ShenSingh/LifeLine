@@ -5,7 +5,7 @@ import svgr from "vite-plugin-svgr";
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    port: 5173, // Change this to your desired port
+    port: 5173,
   },
   plugins: [
     react(),

@@ -2,6 +2,7 @@
 package com.zenveus.backend.controller;
 
 import com.zenveus.backend.dto.DonorDTO;
+import com.zenveus.backend.dto.UserDTO;
 import com.zenveus.backend.entity.User;
 import com.zenveus.backend.service.DonorService;
 import com.zenveus.backend.service.UserService;
@@ -28,6 +29,11 @@ public class DonorController {
     @PostMapping(value = "/create")
     public DonorDTO createDonor(@RequestHeader("Authorization") String token, @RequestBody DonorDTO donorDTO) {
 
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("con class >>"+donorDTO);
+
         String tokens = token.replace("Bearer ", "");
         Claims claims = jwtUtil.getAllClaimsFromToken(tokens);
 
@@ -35,11 +41,15 @@ public class DonorController {
 
         User user = userService.getUserByEmail(email);
 
+        System.out.println("User email: " + user.getEmail());
         if (user == null) {
+            System.out.println("User not found");
             throw new RuntimeException("User not found");
         }
+        System.out.println("User found: " + user);
         donorDTO.setUser(user);
 
+        System.out.println("DonorDTO before save: " + donorDTO);
         return donorService.createDonor(donorDTO);
     }
 

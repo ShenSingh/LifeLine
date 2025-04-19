@@ -22,9 +22,28 @@ public class DonorServiceImpl implements DonorService {
 
     @Override
     public DonorDTO createDonor(DonorDTO donorDTO) {
-        Donor donor = modelMapper.map(donorDTO, Donor.class);
-        donor = donorRepository.save(donor);
-        return modelMapper.map(donor, DonorDTO.class);
+
+        try{
+            Donor regDonor = new Donor();
+            regDonor.setAge(donorDTO.getAge());
+            regDonor.setBloodType(donorDTO.getBloodType());
+            regDonor.setGender(donorDTO.getGender());
+            regDonor.setLastDonationDate(donorDTO.getLastDonationDate());
+            regDonor.setLongTermIllness(donorDTO.isLongTermIllness());
+            regDonor.setNumberOfTimesDonated(donorDTO.getNumberOfTimesDonated());
+            regDonor.setTakingMedicine(donorDTO.isTakingMedicine());
+            regDonor.setWillingToDonateFrequency(donorDTO.getWillingToDonateFrequency());
+            regDonor.setUser(donorDTO.getUser());
+
+            System.out.println("Donor before save: " + regDonor);
+            regDonor = donorRepository.save(regDonor);
+            System.out.println("Donor after save: " + regDonor);
+
+            return modelMapper.map(regDonor, DonorDTO.class);
+        }catch (Exception e){
+            System.out.println("Error in createDonor: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

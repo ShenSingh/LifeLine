@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,27 +112,23 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         try {
             Mail mail = new Mail();
 
-            String[] locationParts = bloodRequest.getHospital().getName().split(",\\s*");
-            String city = locationParts.length > 1 ? locationParts[1] : "Unknown";
-            String country = locationParts.length > 2 ? locationParts[2] : "Unknown";
-
-            String pass = city+", "+country;
+            String encodedLocation = URLEncoder.encode(bloodRequest.getHospital().getName(), StandardCharsets.UTF_8.toString());
+            String mapLink = "http://localhost:5173/mapComponent?location=" + encodedLocation;
 
             String emailContent = "<html>" +
                     "<body>" +
-                    "<h7>Id:"+notificationId+"</h7>"+
+                    "<h7>Id:" + notificationId + "</h7>" +
                     "<h1>Blood Request</h1>" +
                     "<p>Dear " + firstName + ",</p>" +
                     "<p>We have a blood request for " + bloodRequest.getBloodType() + " from " + bloodRequest.getHospital().getName() + ".</p>" +
-                    "<p>Please click the button below if you are able to donate:</p>" +
-                    "<a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">Done</a>" +
-                    "<a href=\"http://localhost:5173/mapComponent?location=" + java.net.URLEncoder.encode(pass, java.nio.charset.StandardCharsets.UTF_8) + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">View Direction</a>" +
+                    "<p>Please click the buttons below:</p>" +
+                    "<a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 10px 20px; margin: 5px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">Confirm Donation</a>" +
+                    "<a href=\"" + mapLink + "\" style=\"display: inline-block; padding: 10px 20px; margin: 5px; font-size: 16px; color: #ffffff; background-color: #28a745; text-align: center; text-decoration: none; border-radius: 5px;\">View Directions</a>" +
                     "</body>" +
                     "</html>";
-
-            mail.setTo(email);
             mail.setSubject("Blood Request");
             mail.setMsg(emailContent);
+            mail.setTo(email);
             mail.run();
             return true;
         }catch (Exception e) {
