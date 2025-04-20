@@ -167,6 +167,9 @@ public class AuthController {
         authDTO.setEmail(email);
         authDTO.setToken(jwt);
 
+        System.out.println("Google login successful: " + email);
+        System.out.println("Generated token: " + jwt);
+
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setCode(VarList.OK);
         responseDTO.setMessage("Login successful");

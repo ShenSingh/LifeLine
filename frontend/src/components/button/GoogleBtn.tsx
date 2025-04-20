@@ -1,5 +1,6 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import {setToken} from "../../service/AuthService.tsx";
 
 export function GoogleBtn() {
     const login = useGoogleLogin({
@@ -25,11 +26,12 @@ export function GoogleBtn() {
                 // Store the JWT token returned from your backend
                 if (res.data && res.data.data) {
                     // Make sure the backend includes the token in the response
-                    localStorage.setItem("token", res.data.data.token || "");
                     console.log("Logged in successfully!");
-                    // Optionally, you can also store user info in local storage
-                    localStorage.setItem("user", JSON.stringify(userInfoResponse.data));
-                    console.log("User info:", userInfoResponse.data);
+
+                    if (res.data.data.token) {
+                        setToken(res.data.data.token);
+                    }
+
                     // Redirect to another page after successful login
                     if(res.data.data.role === "admin") {
                         window.location.href = "/admin";

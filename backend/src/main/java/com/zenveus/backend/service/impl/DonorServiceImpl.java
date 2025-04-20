@@ -3,8 +3,11 @@ package com.zenveus.backend.service.impl;
 
 import com.zenveus.backend.dto.DonorDTO;
 import com.zenveus.backend.entity.Donor;
+import com.zenveus.backend.entity.User;
 import com.zenveus.backend.repository.DonorRepository;
+import com.zenveus.backend.repository.UserRepository;
 import com.zenveus.backend.service.DonorService;
+import com.zenveus.backend.util.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,9 @@ public class DonorServiceImpl implements DonorService {
 
     @Autowired
     private DonorRepository donorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -39,8 +45,19 @@ public class DonorServiceImpl implements DonorService {
             regDonor = donorRepository.save(regDonor);
             System.out.println("Donor after save: " + regDonor);
 
-            return modelMapper.map(regDonor, DonorDTO.class);
+
+            if (regDonor.getId() != null) {
+                User user = regDonor.getUser();
+
+                user.setRole(Role.DONOR);
+
+                User updateUser = userRepository.save(user);
+                return modelMapper.map(regDonor, DonorDTO.class);
+            }
+
+            return null;
         }catch (Exception e){
+            // Log the error message
             System.out.println("Error in createDonor: " + e.getMessage());
         }
         return null;

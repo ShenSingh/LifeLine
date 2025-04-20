@@ -83,6 +83,7 @@ public class BloodRequestController {
     }
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllBloodRequests(OutputStream outputStream) {
         try {
             List<BloodRequestDTO> requests = bloodRequestService.getAllBloodRequests();
