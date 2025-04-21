@@ -18,6 +18,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+
     @PostMapping
     public ResponseEntity<AdminDTO> createAdmin(@RequestBody AdminDTO adminDTO) {
         AdminDTO createdAdmin = adminService.createAdmin(adminDTO);
