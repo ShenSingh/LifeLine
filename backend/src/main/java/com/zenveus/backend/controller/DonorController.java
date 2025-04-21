@@ -2,7 +2,6 @@
 package com.zenveus.backend.controller;
 
 import com.zenveus.backend.dto.DonorDTO;
-import com.zenveus.backend.dto.UserDTO;
 import com.zenveus.backend.entity.User;
 import com.zenveus.backend.service.DonorService;
 import com.zenveus.backend.service.UserService;
@@ -11,6 +10,7 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -63,8 +63,23 @@ public class DonorController {
         donorService.deleteDonor(id);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public DonorDTO updateDonor(@RequestBody DonorDTO donorDTO) {
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("=========================================");
+        System.out.println("DonorDTO before update: " + donorDTO);
+
         return donorService.updateDonor(donorDTO);
     }
 

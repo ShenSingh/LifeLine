@@ -47,3 +47,48 @@ export const loadAllDonors = async () => {
         throw error;
     }
 }
+
+
+// get donor by id
+export const getDonorById = async (id: string | null) => {
+    console.log('Loading donor by ID:', id);
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error loading donor by ID:', error);
+        throw error;
+    }
+};
+
+
+// update donor
+export const updateDonor = async (donor: {
+    age: number;
+    gender: string;
+    bloodType: string;
+    numberOfTimesDonated: number;
+    lastDonationDate: string;
+    willingToDonateFrequency: string;
+    longTermIllness: boolean;
+    takingMedicine: boolean;
+    undergoneSurgery: boolean;
+    id: string | null
+}) => {
+    console.log('Updating donor:', donor);
+    try {
+        const response = await axios.put(`${API_BASE_URL}/update`, donor, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating donor:', error);
+        throw error;
+    }
+};

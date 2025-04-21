@@ -1,10 +1,12 @@
 import axios from "axios";
 import {Hospital} from "./hospital.tsx";
+import {UserBloodRequest} from "./bloodRequest.tsx";
 
 
 const USER_API_URL = 'http://localhost:8181/api/v1/user';
 
 export interface User {
+    bloodRequests: User;
     id: string;
     firstName: string;
     lastName: string;
@@ -13,6 +15,19 @@ export interface User {
     address: string;
     hospital: Hospital;
     role: string;
+}
+
+export interface UserAllInfo {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    hospital: Hospital;
+    role: string;
+    bloodRequests: UserBloodRequest[];
+
 }
 
 
@@ -27,6 +42,7 @@ export async function getUser() {
             }
         });
         console.log('Response: User', response);
+        console.log(response.data.bloodRequests)
         return response.data;
     } catch (error) {
         console.error('Error fetching user:', error);
@@ -73,3 +89,6 @@ export async function updateUser(updatedUser: {
         throw error;
     }
 }
+
+
+// get

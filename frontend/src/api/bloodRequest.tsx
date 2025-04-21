@@ -9,6 +9,13 @@ export interface BloodRequest {
     hospital: Hospital;
 }
 
+export interface UserBloodRequest {
+    id: string;
+    bloodType: string;
+    status: string;
+    createdAt: string | null;
+}
+
 const token = getToken();
 
 // Create a new blood request

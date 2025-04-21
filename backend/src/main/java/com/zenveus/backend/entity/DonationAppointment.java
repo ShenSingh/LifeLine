@@ -42,4 +42,5 @@ public class DonationAppointment {
     private int getNextCounter() {
         return (int) (Math.random() * 10000); // Example logic
     }
+
 }

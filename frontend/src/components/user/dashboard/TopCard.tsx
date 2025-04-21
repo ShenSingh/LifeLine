@@ -5,8 +5,37 @@ import {
   TaskIcon,
 } from "../../../icons";
 import Badge from "../../uiComponent/badge/Badge.tsx";
+import {useEffect, useState} from "react";
+import {getUser, UserAllInfo} from "../../../api/user.tsx";
 
 export default function TopCard() {
+  const [user, setUser] = useState<UserAllInfo | null>(null);
+  const [bloodRequests, setBloodRequests] = useState<
+      { id: string; bloodType: string; status: string; createdAt: string | null }[]
+  >([]);
+
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const fetchedUser = await getUser();
+        setUser(fetchedUser as unknown as UserAllInfo); // Cast to UserAllInfo if compatible
+
+        if (fetchedUser && Array.isArray(fetchedUser.bloodRequests)) {
+          setBloodRequests(fetchedUser.bloodRequests);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    }
+    fetchUser();
+  }, []);
+
+  {
+    console.log("User:", user);
+  }
+
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
       {/* <!-- Metric Item Start --> */}
@@ -21,7 +50,7 @@ export default function TopCard() {
               Blood Request
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              3
+              {bloodRequests.length}
             </h4>
           </div>
           <Badge color="success">

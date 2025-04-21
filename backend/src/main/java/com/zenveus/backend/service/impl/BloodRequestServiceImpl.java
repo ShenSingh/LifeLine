@@ -115,16 +115,58 @@ public class BloodRequestServiceImpl implements BloodRequestService {
             String encodedLocation = URLEncoder.encode(bloodRequest.getHospital().getName(), StandardCharsets.UTF_8.toString());
             String mapLink = "http://localhost:5173/mapComponent?location=" + encodedLocation;
 
-            String emailContent = "<html>" +
-                    "<body>" +
-                    "<h7>Id:" + notificationId + "</h7>" +
-                    "<h1>Blood Request</h1>" +
-                    "<p>Dear " + firstName + ",</p>" +
-                    "<p>We have a blood request for " + bloodRequest.getBloodType() + " from " + bloodRequest.getHospital().getName() + ".</p>" +
-                    "<p>Please click the buttons below:</p>" +
-                    "<a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 10px 20px; margin: 5px; font-size: 16px; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;\">Confirm Donation</a>" +
-                    "<a href=\"" + mapLink + "\" style=\"display: inline-block; padding: 10px 20px; margin: 5px; font-size: 16px; color: #ffffff; background-color: #28a745; text-align: center; text-decoration: none; border-radius: 5px;\">View Directions</a>" +
-                    "</body>" +
+            String emailContent = "<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Blood Donation Request</title>\n" +
+                    "</head>\n" +
+                    "<body style=\"margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #f5f5f5;\">\n" +
+                    "    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);\">\n" +
+                    "        <tr>\n" +
+                    "            <td style=\"background-color: #e53935; padding: 20px; text-align: center;\">\n" +
+                    "                <h1 style=\"color: #ffffff; margin: 0; font-size: 24px;\">Urgent Blood Donation Request</h1>\n" +
+                    "            </td>\n" +
+                    "        </tr>\n" +
+                    "        <tr>\n" +
+                    "            <td style=\"padding: 30px 30px 20px 30px;\">\n" +
+                    "                <p style=\"font-size: 12px; color: #888888; margin-top: 0;\">Request ID: " + notificationId + "</p>\n" +
+                    "                <p style=\"margin-top: 15px; font-size: 16px;\">Dear <strong>" + firstName + "</strong>,</p>\n" +
+                    "                <p style=\"font-size: 16px;\">We have an urgent blood donation request that matches your blood type. Your donation can save a life today!</p>\n" +
+                    "                \n" +
+                    "                <div style=\"background-color: #f9f9f9; border-left: 4px solid #e53935; padding: 15px; margin: 20px 0;\">\n" +
+                    "                    <h2 style=\"margin-top: 0; color: #e53935; font-size: 18px;\">Request Details</h2>\n" +
+                    "                    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"font-size: 15px;\">\n" +
+                    "                        <tr>\n" +
+                    "                            <td width=\"120\" style=\"padding: 8px 0;\"><strong>Blood Type:</strong></td>\n" +
+                    "                            <td style=\"padding: 8px 0;\"><span style=\"color: #e53935; font-weight: bold;\">" + bloodRequest.getBloodType() + "</span></td>\n" +
+                    "                        </tr>\n" +
+                    "                        <tr>\n" +
+                    "                            <td style=\"padding: 8px 0;\"><strong>Location:</strong></td>\n" +
+                    "                            <td style=\"padding: 8px 0;\">" + bloodRequest.getHospital().getName() + "</td>\n" +
+                    "                        </tr>\n" +
+                    "                    </table>\n" +
+                    "                </div>\n" +
+                    "                \n" +
+                    "                <p style=\"font-size: 16px;\">Your blood donation can make a life-saving difference. If you're available to donate, please confirm using the button below.</p>\n" +
+                    "                \n" +
+                    "                <div style=\"text-align: center; margin: 30px 0;\">\n" +
+                    "                    <a href=\"http://localhost:8181/api/v1/notification/email?notificationId=" + notificationId + "\" style=\"display: inline-block; padding: 12px 24px; margin: 0 5px 10px 5px; font-size: 16px; font-weight: bold; color: #ffffff; background-color: #e53935; text-align: center; text-decoration: none; border-radius: 4px;\">Confirm Donation</a>\n" +
+                    "                    <a href=\"" + mapLink + "\" style=\"display: inline-block; padding: 12px 24px; margin: 0 5px 10px 5px; font-size: 16px; font-weight: bold; color: #ffffff; background-color: #4caf50; text-align: center; text-decoration: none; border-radius: 4px;\">View Hospital Directions</a>\n" +
+                    "                </div>\n" +
+                    "                \n" +
+                    "                <p style=\"font-size: 14px; color: #666666;\">Thank you for being a registered blood donor. Your generosity helps us save lives every day.</p>\n" +
+                    "            </td>\n" +
+                    "        </tr>\n" +
+                    "        <tr>\n" +
+                    "            <td style=\"padding: 20px; text-align: center; background-color: #f5f5f5; border-top: 1px solid #eeeeee;\">\n" +
+                    "                <p style=\"margin: 0; font-size: 14px; color: #777777;\">LifeLine Blood Donation Service</p>\n" +
+                    "                <p style=\"margin: 5px 0 0; font-size: 12px; color: #999999;\">Together we save lives</p>\n" +
+                    "            </td>\n" +
+                    "        </tr>\n" +
+                    "    </table>\n" +
+                    "</body>\n" +
                     "</html>";
             mail.setSubject("Blood Request");
             mail.setMsg(emailContent);

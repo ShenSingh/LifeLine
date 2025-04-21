@@ -3,6 +3,7 @@ package com.zenveus.backend.service.impl;
 import com.zenveus.backend.dto.MessageDTO;
 import com.zenveus.backend.dto.NotificationDTO;
 import com.zenveus.backend.entity.*;
+import com.zenveus.backend.repository.DonationAppointmentRepository;
 import com.zenveus.backend.repository.NotificationRepository;
 import com.zenveus.backend.repository.UserRepository;
 import com.zenveus.backend.service.NotificationService;
@@ -10,6 +11,9 @@ import com.zenveus.backend.util.Mail;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.threeten.bp.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -22,6 +26,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DonationAppointmentRepository donationAppointmentRepository;
 
     @Override
     public NotificationDTO createNotification(NotificationDTO notificationDTO) {
@@ -71,21 +78,117 @@ public class NotificationServiceImpl implements NotificationService {
         Donor donor = notification.getDonor();
         User donorUser = userRepository.findById(conformDonorId).orElseThrow(() -> new RuntimeException("User not found"));
 
+        try{
+
+            // create donation appointment
+            DonationAppointment donationAppointment = new DonationAppointment();
+            donationAppointment.setDonor(donorUser);
+            donationAppointment.setRequester(requester);
+            donationAppointment.setHospital(message.getBloodRequest().getHospital());
+
+            try {
+                // Get blood request created date
+                String createdAtStr = message.getBloodRequest().getCreatedAt();
+                java.time.LocalDateTime dateTime;
+
+                // Try to parse with DateTimeFormatter
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+                    dateTime = java.time.LocalDateTime.parse(createdAtStr, formatter);
+                } catch (Exception e) {
+                    // Fallback to current date if parsing fails
+                    dateTime = java.time.LocalDateTime.now();
+                    System.out.println("Using current date due to parsing error: " + e.getMessage());
+                }
+
+                // Add 5 days for the appointment
+                java.time.LocalDateTime appointmentDate = dateTime.plusDays(5);
+                donationAppointment.setAppointmentDate(appointmentDate);
+                donationAppointment.setStatus("Pending");
+
+                // Save the donation appointment
+                donationAppointmentRepository.save(donationAppointment);
+                System.out.println("Donation appointment created successfully");
+            } catch (Exception e) {
+                System.out.println("Error in donor appointment: " + e.getMessage());
+                e.printStackTrace(); // Add this to get full error details
+            }
+
+            donationAppointment.setStatus("Pending");
+            // Save the donation appointment
+            donationAppointmentRepository.save(donationAppointment);
+            System.out.println("Donation appointment created successfully");
+        }catch (Exception e){
+            // Log the error message
+            System.out.println("Error in donor appointment: " + e.getMessage());
+        }
+
+
         // Send email to the requester
         Mail mail = new Mail();
-        String emailContent = "<html>" +
-                "<body>" +
-                "<h1>Blood Request Confirmation</h1>" +
-                "<p>Dear " + requester.getFirstName() + ",</p>" +
-                "<p>We are pleased to inform you that a donor has been confirmed for your blood request.</p>" +
-                "<p>Donor Details:</p>" +
-                "<ul>" +
-                "<li>Name: " + donorUser.getFirstName() + " " + donorUser.getLastName() + "</li>" +
-                "<li>Blood Type: " + donor.getBloodType() + "</li>" +
-                "<li>Contact: " + donorUser.getEmail() + "</li>" +
-                "</ul>" +
-                "<p>Thank you for using our service.</p>" +
-                "</body>" +
+
+        String emailContent = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Blood Request Confirmation</title>\n" +
+                "</head>\n" +
+                "<body style=\"margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #f5f5f5;\">\n" +
+                "    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);\">\n" +
+                "        <tr>\n" +
+                "            <td style=\"background-color: #e53935; padding: 20px; text-align: center;\">\n" +
+                "                <img src=\"https://i.imgur.com/3AUdd6P.png\" alt=\"LifeLine Logo\" width=\"120\" style=\"margin-bottom: 10px;\">\n" +
+                "                <h1 style=\"color: #ffffff; margin: 0; font-size: 24px;\">Blood Request Confirmation</h1>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td style=\"padding: 30px 30px 20px 30px;\">\n" +
+                "                <p style=\"margin-top: 0; font-size: 16px;\">Dear <strong>" + requester.getFirstName() + "</strong>,</p>\n" +
+                "                <p style=\"font-size: 16px;\">Great news! A donor has been confirmed for your blood request. The donation process has been initiated and an appointment has been scheduled.</p>\n" +
+                "                \n" +
+                "                <div style=\"background-color: #f9f9f9; border-left: 4px solid #e53935; padding: 15px; margin: 20px 0;\">\n" +
+                "                    <h2 style=\"margin-top: 0; color: #e53935; font-size: 18px;\">Donor Details</h2>\n" +
+                "                    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"font-size: 15px;\">\n" +
+                "                        <tr>\n" +
+                "                            <td width=\"120\" style=\"padding: 8px 0;\"><strong>Name:</strong></td>\n" +
+                "                            <td style=\"padding: 8px 0;\">" + donorUser.getFirstName() + " " + donorUser.getLastName() + "</td>\n" +
+                "                        </tr>\n" +
+                "                        <tr>\n" +
+                "                            <td style=\"padding: 8px 0;\"><strong>Blood Type:</strong></td>\n" +
+                "                            <td style=\"padding: 8px 0;\"><span style=\"color: #e53935; font-weight: bold;\">" + donor.getBloodType() + "</span></td>\n" +
+                "                        </tr>\n" +
+                "                        <tr>\n" +
+                "                            <td style=\"padding: 8px 0;\"><strong>Contact:</strong></td>\n" +
+                "                            <td style=\"padding: 8px 0;\"><a href=\"mailto:" + donorUser.getEmail() + "\" style=\"color: #1e88e5; text-decoration: none;\">" + donorUser.getEmail() + "</a></td>\n" +
+                "                        </tr>\n" +
+                "                    </table>\n" +
+                "                </div>\n" +
+                "                \n" +
+                "                <p style=\"font-size: 16px;\">An appointment has been scheduled for the donation. You will receive further details about the appointment soon.</p>\n" +
+                "                \n" +
+                "                <p style=\"font-size: 16px;\">If you have any questions or need further assistance, please don't hesitate to contact our support team.</p>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td style=\"padding: 20px 30px; text-align: center; background-color: #f5f5f5; border-top: 1px solid #eeeeee;\">\n" +
+                "                <p style=\"margin: 0; font-size: 14px; color: #777777;\">Thank you for using our service.</p>\n" +
+                "                <p style=\"margin: 10px 0 0; font-size: 14px; color: #777777;\">LifeLine Blood Donation Service</p>\n" +
+                "                <div style=\"margin-top: 15px;\">\n" +
+                "                    <a href=\"#\" style=\"display: inline-block; margin: 0 5px; text-decoration: none;\">\n" +
+                "                        <img src=\"https://i.imgur.com/3tBTUDq.png\" alt=\"Website\" width=\"24\" height=\"24\">\n" +
+                "                    </a>\n" +
+                "                    <a href=\"#\" style=\"display: inline-block; margin: 0 5px; text-decoration: none;\">\n" +
+                "                        <img src=\"https://i.imgur.com/Np8mGVD.png\" alt=\"Email\" width=\"24\" height=\"24\">\n" +
+                "                    </a>\n" +
+                "                    <a href=\"#\" style=\"display: inline-block; margin: 0 5px; text-decoration: none;\">\n" +
+                "                        <img src=\"https://i.imgur.com/Ls3ao7z.png\" alt=\"Phone\" width=\"24\" height=\"24\">\n" +
+                "                    </a>\n" +
+                "                </div>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "</body>\n" +
                 "</html>";
 
         mail.setTo(requester.getEmail());

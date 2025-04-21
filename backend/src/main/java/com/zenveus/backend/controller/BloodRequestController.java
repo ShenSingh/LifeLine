@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -48,7 +49,15 @@ public class BloodRequestController {
 
             // setValues the request data
             bloodRequestDTO.setStatus("Pending");
-            bloodRequestDTO.setCreatedAt(String.valueOf(System.currentTimeMillis()));
+            bloodRequestDTO.setBloodType(bloodRequestDTO.getBloodType());
+
+            Date currentDate = new Date();
+
+            bloodRequestDTO.setCreatedAt(String.valueOf(currentDate));
+
+            System.out.println("==========================================");
+            System.out.println("createAt: " + bloodRequestDTO.getCreatedAt());
+            System.out.println("==========================================");
 
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 

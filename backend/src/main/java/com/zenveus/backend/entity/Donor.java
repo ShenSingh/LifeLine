@@ -28,7 +28,7 @@ public class Donor {
     private BloodType bloodType;
 
     private int numberOfTimesDonated;
-    private LocalDateTime lastDonationDate;
+    private String lastDonationDate;
     private String willingToDonateFrequency; // 4 months, 6 months, 1 year
     private boolean longTermIllness;
     private boolean takingMedicine;
