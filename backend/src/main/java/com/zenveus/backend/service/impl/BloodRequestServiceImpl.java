@@ -203,4 +203,19 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
         return bloodRequests;
     }
+
+    @Override
+    public List<BloodRequestDTO> getBloodRequestsByUserId(String id) {
+        List<BloodRequest> bloodRequests = bloodRequestRepository.findByRequesterId(id);
+        List<BloodRequestDTO> bloodRequestDTOs = new ArrayList<>();
+
+        for (BloodRequest bloodRequest : bloodRequests) {
+            BloodRequestDTO bloodRequestDTO = modelMapper.map(bloodRequest, BloodRequestDTO.class);
+            bloodRequestDTO.setRequester(modelMapper.map(bloodRequest.getRequester(), UserDTO.class));
+            bloodRequestDTO.setHospital(modelMapper.map(bloodRequest.getHospital(), HospitalDTO.class));
+            bloodRequestDTOs.add(bloodRequestDTO);
+        }
+
+        return bloodRequestDTOs;
+    }
 }

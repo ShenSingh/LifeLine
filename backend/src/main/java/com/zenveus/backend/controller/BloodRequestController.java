@@ -102,4 +102,23 @@ public class BloodRequestController {
             return ResponseEntity.status(500).body("Error retrieving blood requests: " + e.getMessage());
         }
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserBloodRequests(@RequestHeader("Authorization") String token) {
+        try {
+            String tokens = token.replace("Bearer ", "");
+            Claims claims = jwtUtil.getAllClaimsFromToken(tokens);
+            String email = claims.getSubject();
+
+            User user = userService.getUserByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(401).body("Unauthorized: User not found");
+            }
+
+            List<BloodRequestDTO> requests = bloodRequestService.getBloodRequestsByUserId(user.getId());
+            return ResponseEntity.ok(requests);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error retrieving blood requests: " + e.getMessage());
+        }
+    }
 }

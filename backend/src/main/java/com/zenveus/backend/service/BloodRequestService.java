@@ -9,4 +9,6 @@ public interface BloodRequestService {
     BloodRequestDTO updateBloodRequest(String id, BloodRequestDTO bloodRequestDTO);
     void deleteBloodRequest(String id);
     List<BloodRequestDTO> getAllBloodRequests();
+
+    List<BloodRequestDTO> getBloodRequestsByUserId(String id);
 }

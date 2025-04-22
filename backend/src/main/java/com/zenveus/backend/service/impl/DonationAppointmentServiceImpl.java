@@ -52,4 +52,14 @@ public class DonationAppointmentServiceImpl implements DonationAppointmentServic
     public void deleteAppointment(String id) {
         appointmentRepository.deleteById(id);
     }
+
+    @Override
+    public List<DonationAppointmentDTO> getDonationAppointmentsByUserId(String userId) {
+        List<DonationAppointment> appointments =
+                appointmentRepository.findByDonorId(userId);
+
+        return appointments.stream()
+                .map(appointment -> modelMapper.map(appointment, DonationAppointmentDTO.class))
+                .collect(Collectors.toList());
+    }
 }

@@ -10,4 +10,6 @@ public interface DonationAppointmentService {
     List<DonationAppointmentDTO> getAllAppointments();
     DonationAppointmentDTO updateAppointment(String id, DonationAppointmentDTO appointmentDTO);
     void deleteAppointment(String id);
+
+    List<DonationAppointmentDTO> getDonationAppointmentsByUserId(String id);
 }
