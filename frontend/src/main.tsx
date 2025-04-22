@@ -11,8 +11,7 @@ import { ThemeProvider } from "./context/ThemeContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <GoogleOAuthProvider clientId="265222903570-ek74d4orunrppng6q78h7j0dn3fek05h.apps.googleusercontent.com"> {/* 👈 wrap */}
-            <ThemeProvider>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>            <ThemeProvider>
                 <AppWrapper>
                     <App />
                 </AppWrapper>

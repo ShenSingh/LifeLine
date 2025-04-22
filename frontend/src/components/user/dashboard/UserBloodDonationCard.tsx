@@ -17,7 +17,7 @@ export default function UserBloodDonationCard() {
              Complete Blood Donation
             </span>
                         <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                            20
+                            0
                         </h4>
                     </div>
                     <Badge color="success">
@@ -40,7 +40,7 @@ export default function UserBloodDonationCard() {
               Last Blood Donation
             </span>
                         <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                            2023-10-05
+                            -
                         </h4>
                     </div>
 
